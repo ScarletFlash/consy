@@ -1,0 +1,9 @@
+{
+  "name": "@consy/configs",
+  "devDependencies": {
+    "typescript": "catalog:codebase"
+  },
+  "files": [
+    "./typescript/*.json"
+  ]
+}

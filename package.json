@@ -1,0 +1,13 @@
+{
+  "name": "consy",
+  "version": "0.0.1-reserve-name",
+  "license": "MIT",
+  "author": {
+    "email": "scarletflash.dev@gmail.com",
+    "name": "Fedor Usakov",
+    "url": "https://scarletflash.github.io/"
+  },
+  "devDependencies": {
+    "turbo": "catalog:codebase"
+  }
+}

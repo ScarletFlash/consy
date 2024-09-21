@@ -1,0 +1,10 @@
+{
+  "name": "@consy/core",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@consy/configs": "workspace:*",
+    "typescript": "catalog:codebase"
+  }
+}
