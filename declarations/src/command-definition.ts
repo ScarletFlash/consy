@@ -1,5 +1,5 @@
-import { AnyFunction } from "./any-function.type";
-import { SyncOrAsyncFunction } from "./sync-or-async-function.type";
+import { AnyFunction } from "./any-function";
+import { SyncOrAsyncFunction } from "./sync-or-async-function";
 
 interface CommandDefinitionBase<C extends AnyFunction> {
   name: string;

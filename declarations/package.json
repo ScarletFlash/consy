@@ -1,11 +1,11 @@
 {
-  "name": "@consy/core",
+  "name": "@consy/declarations",
+  "main": "src/public-api.ts",
   "scripts": {
     "compiler__run": "tsc --project tsconfig.json"
   },
   "devDependencies": {
     "@consy/configs": "workspace:*",
-    "@consy/declarations": "workspace:*",
     "typescript": "catalog:codebase"
   }
 }

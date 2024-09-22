@@ -1,7 +1,9 @@
+import {
+  CallableCommand,
+  CommandDefinition,
+  InteractiveObject,
+} from "@consy/declarations";
 import { Acessor } from "./accessor";
-import { CallableCommand } from "./declarations/callable-command.type";
-import { CommandDefinition } from "./declarations/command-definition.type";
-import { InteractiveObject } from "./declarations/interactive-object.type";
 
 export class InteractiveObjectBuilder {
   readonly #payload: InteractiveObject = {};

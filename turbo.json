@@ -1,4 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "tasks": {}
+  "ui": "stream",
+  "globalDependencies": [
+    "!./node_modules/",
+    "!./**/.turbo/",
+    "!.turbo/**/*",
+    "./configs/**/*",
+    ".npmrc",
+    "pnpm-*.yaml",
+    "package.json"
+  ],
+  "tasks": {
+    "compiler__run": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./src/**/*.ts", "./tsconfig.json"],
+      "outputs": ["./tsc-out"],
+      "outputLogs": "errors-only"
+    }
+  }
 }

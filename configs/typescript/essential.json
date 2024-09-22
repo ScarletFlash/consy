@@ -3,7 +3,8 @@
   "display": "Default",
   "compilerOptions": {
     "target": "ESNext",
-    "composite": false,
+    "composite": true,
+    "incremental": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,

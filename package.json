@@ -7,7 +7,15 @@
     "name": "Fedor Usakov",
     "url": "https://scarletflash.github.io/"
   },
+  "scripts": {
+    "compiler__run": "turbo run compiler__run"
+  },
   "devDependencies": {
     "turbo": "catalog:codebase"
-  }
+  },
+  "engines": {
+    "pnpm": "9.10.0",
+    "node": "22.8.0"
+  },
+  "packageManager": "pnpm@9.10.0"
 }

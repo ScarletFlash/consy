@@ -1,4 +1,4 @@
-import { AnyFunction } from "./any-function.type";
+import { AnyFunction } from "./any-function";
 
 /** @private */
 export type SyncOrAsyncFunction<F extends AnyFunction> = F extends (

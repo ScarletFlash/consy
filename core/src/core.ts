@@ -1,6 +1,6 @@
 import { Acessor } from "./accessor";
-import { InteractiveObject } from "./declarations/interactive-object.type";
 import { InteractiveObjectBuilder } from "./interactive-object-builder";
+import { InteractiveObject } from "@consy/declarations";
 
 export class Core<K extends string> {
   readonly #interactor: InteractiveObjectBuilder =
