@@ -8,7 +8,8 @@
     "url": "https://scarletflash.github.io/"
   },
   "scripts": {
-    "compiler__run": "turbo run compiler__run"
+    "compiler__run": "turbo run compiler__run",
+    "compiler__check": "turbo run compiler__check"
   },
   "devDependencies": {
     "turbo": "catalog:codebase"

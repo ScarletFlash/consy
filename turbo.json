@@ -17,6 +17,12 @@
       "inputs": ["./src/**/*.ts", "./tsconfig.json"],
       "outputs": ["./tsc-out"],
       "outputLogs": "errors-only"
+    },
+    "compiler__check": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./src/**/*.ts", "./tsconfig.json"],
+      "outputLogs": "errors-only"
     }
   }
 }

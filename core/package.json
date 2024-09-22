@@ -1,7 +1,8 @@
 {
   "name": "@consy/core",
   "scripts": {
-    "compiler__run": "tsc --project tsconfig.json"
+    "compiler__run": "tsc --project tsconfig.json",
+    "compiler__check": "tsc --project tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@consy/configs": "workspace:*",
