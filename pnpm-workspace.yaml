@@ -1,10 +1,10 @@
 packages:
-  - "./*/"
+  - './*/'
 
 catalogs:
   build-tools:
-    "@npm/types": ^2.0.0
-    "@types/node": ^22.5.0
+    '@npm/types': ^2.0.0
+    '@types/node': ^22.5.0
     ts-node: ^10.0.0
     esbuild: ~0.24.0
     dts-bundle-generator: ~9.5.0
@@ -12,3 +12,4 @@ catalogs:
   codebase:
     turbo: ~2.1.0
     typescript: ~5.6.0
+    prettier: ^3.0.0

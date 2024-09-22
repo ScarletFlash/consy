@@ -1,10 +1,16 @@
 {
   "name": "@consy/configs",
   "private": true,
+  "scripts": {
+    "formatter__check": "prettier --config prettier/config.json --ignore-path prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
+    "formatter__fix": "prettier --config prettier/config.json --ignore-path prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ."
+  },
   "devDependencies": {
-    "typescript": "catalog:codebase"
+    "typescript": "catalog:codebase",
+    "prettier": "catalog:codebase"
   },
   "files": [
-    "./typescript/*.json"
+    "./typescript/*.json",
+    "./prettier/*"
   ]
 }

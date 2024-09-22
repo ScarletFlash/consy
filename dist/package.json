@@ -9,6 +9,8 @@
     "compiler__check:build": "tsc --project tsconfig.build.json --noEmit",
     "compiler__run:scripts": "tsc --project tsconfig.scripts.json",
     "compiler__check:scripts": "tsc --project tsconfig.scripts.json --noEmit",
+    "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
+    "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
   "devDependencies": {
@@ -20,6 +22,7 @@
     "esbuild": "catalog:build-tools",
     "@types/node": "catalog:build-tools",
     "@npm/types": "catalog:build-tools",
-    "dts-bundle-generator": "catalog:build-tools"
-    }
+    "dts-bundle-generator": "catalog:build-tools",
+    "prettier": "catalog:codebase"
+  }
 }

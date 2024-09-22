@@ -23,6 +23,38 @@
       "persistent": false,
       "inputs": ["./src/**/*.ts", "./tsconfig.json"],
       "outputLogs": "errors-only"
+    },
+    "formatter__check": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./**/*.{ts,yaml,yml,json,md}"],
+      "outputs": [],
+      "dependsOn": ["//#formatter__check:root"],
+      "outputLogs": "errors-only"
+    },
+    "//#formatter__check:root": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./*.*"],
+      "outputs": [],
+      "dependsOn": [],
+      "outputLogs": "errors-only"
+    },
+    "formatter__fix": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./**/*.{ts,yaml,yml,json,md}"],
+      "outputs": ["./**/*.{ts,yaml,yml,json,md}"],
+      "dependsOn": ["//#formatter__fix:root"],
+      "outputLogs": "errors-only"
+    },
+    "//#formatter__fix:root": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./*.*", "!turbo.json"],
+      "outputs": ["./*.*", "!turbo.json"],
+      "dependsOn": [],
+      "outputLogs": "errors-only"
     }
   }
 }

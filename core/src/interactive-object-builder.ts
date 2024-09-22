@@ -1,15 +1,9 @@
-import {
-  CallableCommand,
-  CommandDefinition,
-  InteractiveObject,
-} from "@consy/declarations";
-import { Acessor } from "./accessor";
+import { CallableCommand, CommandDefinition, InteractiveObject } from '@consy/declarations';
+import { Acessor } from './accessor';
 
 export class InteractiveObjectBuilder {
   readonly #payload: InteractiveObject = {};
-  readonly #accessor: Acessor<CallableCommand> = new Acessor<CallableCommand>(
-    this.#payload
-  );
+  readonly #accessor: Acessor<CallableCommand> = new Acessor<CallableCommand>(this.#payload);
 
   public get payload(): InteractiveObject {
     return this.#payload;
