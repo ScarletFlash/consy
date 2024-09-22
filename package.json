@@ -10,6 +10,7 @@
     "formatter__check:root": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check ./*",
     "formatter__fix:root": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ./*",
     "extract-api": "pnpm turbo extract-api",
+    "build": "pnpm turbo build",
     "turbo": "turbo run --no-cache"
   },
   "devDependencies": {

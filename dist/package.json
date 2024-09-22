@@ -25,7 +25,6 @@
     "esbuild": "catalog:build-tools",
     "@types/node": "catalog:build-tools",
     "@npm/types": "catalog:build-tools",
-    "dts-bundle-generator": "catalog:build-tools",
     "prettier": "catalog:codebase",
     "@microsoft/api-extractor": "catalog:build-tools"
   },

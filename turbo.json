@@ -58,6 +58,11 @@
       "outputs": ["./tsc-out/bundle.d.ts"],
       "dependsOn": ["compiler__run", "^extract-api"],
       "outputLogs": "errors-only"
+    },
+    "build": {
+      "cache": true,
+      "persistent": false,
+      "outputLogs": "errors-only"
     }
   },
   "ui": "stream"

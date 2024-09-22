@@ -1,7 +1,6 @@
 import { PackageJSON } from '@npm/types';
-import { generateDtsBundle } from 'dts-bundle-generator';
 import { build } from 'esbuild';
-import { access, readFile, rm, writeFile } from 'fs/promises';
+import { access, copyFile, readFile, rm, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
 const DEFAULT_CHARSET: 'utf8' = 'utf8';
@@ -10,6 +9,8 @@ const RESULT_BUNDLE_PATH: string = resolve(__dirname, 'bundle');
 
 const ENTRY_POINT_FILE_NAME: string = 'index';
 const ENTRY_POINT_PATH: string = resolve(__dirname, 'src', `${ENTRY_POINT_FILE_NAME}.ts`);
+
+const TYPINGS_ENTRY_POINT_PATH: string = resolve(__dirname, 'tsc-out', 'bundle.d.ts');
 const RESULT_BUNDLE_TYPINGS_PATH: string = resolve(RESULT_BUNDLE_PATH, `${ENTRY_POINT_FILE_NAME}.d.ts`);
 
 const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
@@ -41,7 +42,7 @@ const PACKAGE_MANIFEST_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, PA
     legalComments: 'external'
   });
 
-  const { name, version, dependencies, devDependencies }: PackageJSON = JSON.parse(
+  const { name, version }: PackageJSON = JSON.parse(
     await readFile(PACKAGE_MANIFEST_SOURCE_FILE_PATH, {
       encoding: DEFAULT_CHARSET
     })
@@ -58,7 +59,8 @@ const PACKAGE_MANIFEST_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, PA
   const bundlePackageJsonContent: PackageJSON = {
     name,
     version,
-    browser: './public-api.js',
+    browser: `./${ENTRY_POINT_FILE_NAME}.js`,
+    types: `./${ENTRY_POINT_FILE_NAME}.d.ts`,
     repository: {
       type: 'git',
       url: 'git+https://github.com/ScarletFlash/consy.git'
@@ -75,25 +77,5 @@ const PACKAGE_MANIFEST_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, PA
     encoding: DEFAULT_CHARSET
   });
 
-  const typingsBundle: string = generateDtsBundle([
-    {
-      filePath: ENTRY_POINT_PATH,
-
-      libraries: {
-        inlinedLibraries: Array.from(
-          new Set(Object.keys(dependencies ?? {})).union(new Set(Object.keys(devDependencies ?? {})))
-        )
-      },
-      output: {
-        sortNodes: false,
-        inlineDeclareExternals: true,
-        inlineDeclareGlobals: true,
-        noBanner: true,
-        exportReferencedTypes: false
-      }
-    }
-  ]).join('\n');
-  await writeFile(RESULT_BUNDLE_TYPINGS_PATH, typingsBundle, {
-    encoding: DEFAULT_CHARSET
-  });
+  await copyFile(TYPINGS_ENTRY_POINT_PATH, RESULT_BUNDLE_TYPINGS_PATH);
 })();
