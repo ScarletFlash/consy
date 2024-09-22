@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "stream",
   "globalDependencies": [
     "!./node_modules/",
     "!./**/.turbo/",
@@ -60,5 +59,6 @@
       "dependsOn": ["compiler__run", "^extract-api"],
       "outputLogs": "errors-only"
     }
-  }
+  },
+  "ui": "stream"
 }

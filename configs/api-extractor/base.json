@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "<projectFolder>/tsc-out/src/index.d.ts",
-  "newlineKind": "lf",
-  "enumMemberOrder": "preserve",
+  "apiReport": {
+    "enabled": false
+  },
   "compiler": {
     "tsconfigFilePath": "<projectFolder>/tsconfig.json",
     "skipLibCheck": false,
@@ -14,9 +14,6 @@
       }
     }
   },
-  "apiReport": {
-    "enabled": false
-  },
   "docModel": {
     "enabled": false
   },
@@ -24,9 +21,8 @@
     "enabled": true,
     "untrimmedFilePath": "<projectFolder>/tsc-out/bundle.d.ts"
   },
-  "tsdocMetadata": {
-    "enabled": false
-  },
+  "enumMemberOrder": "preserve",
+  "mainEntryPointFilePath": "<projectFolder>/tsc-out/src/index.d.ts",
   "messages": {
     "compilerMessageReporting": {
       "default": {
@@ -46,5 +42,9 @@
         "logLevel": "warning"
       }
     }
+  },
+  "newlineKind": "lf",
+  "tsdocMetadata": {
+    "enabled": false
   }
 }

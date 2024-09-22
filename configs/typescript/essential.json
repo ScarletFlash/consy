@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
   "compilerOptions": {
     "target": "ESNext",
     "composite": true,
@@ -28,5 +27,6 @@
     "disableSolutionSearching": true,
     "disableSizeLimit": true,
     "outDir": "tsc-out"
-  }
+  },
+  "display": "Default"
 }

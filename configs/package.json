@@ -5,6 +5,9 @@
     "formatter__check": "prettier --config prettier/config.json --ignore-path prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
     "formatter__fix": "prettier --config prettier/config.json --ignore-path prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ."
   },
+  "dependencies": {
+    "prettier-plugin-sort-json": "catalog:codebase"
+  },
   "devDependencies": {
     "typescript": "catalog:codebase",
     "prettier": "catalog:codebase"

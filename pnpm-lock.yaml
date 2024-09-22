@@ -28,6 +28,9 @@ catalogs:
     prettier:
       specifier: ^3.0.0
       version: 3.3.3
+    prettier-plugin-sort-json:
+      specifier: ^4.0.0
+      version: 4.0.0
     turbo:
       specifier: ~2.1.0
       version: 2.1.2
@@ -50,6 +53,10 @@ importers:
         version: 2.1.2
 
   configs:
+    dependencies:
+      prettier-plugin-sort-json:
+        specifier: catalog:codebase
+        version: 4.0.0(prettier@3.3.3)
     devDependencies:
       prettier:
         specifier: catalog:codebase
@@ -59,13 +66,14 @@ importers:
         version: 5.6.2
 
   core:
+    dependencies:
+      '@consy/declarations':
+        specifier: workspace:*
+        version: link:../declarations
     devDependencies:
       '@consy/configs':
         specifier: workspace:*
         version: link:../configs
-      '@consy/declarations':
-        specifier: workspace:*
-        version: link:../declarations
       '@microsoft/api-extractor':
         specifier: catalog:build-tools
         version: 7.47.9(@types/node@22.5.5)
@@ -92,16 +100,17 @@ importers:
         version: 5.6.2
 
   dist:
-    devDependencies:
-      '@consy/configs':
-        specifier: workspace:*
-        version: link:../configs
+    dependencies:
       '@consy/core':
         specifier: workspace:*
         version: link:../core
       '@consy/declarations':
         specifier: workspace:*
         version: link:../declarations
+    devDependencies:
+      '@consy/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@microsoft/api-extractor':
         specifier: catalog:build-tools
         version: 7.47.9(@types/node@22.5.5)
@@ -494,6 +503,12 @@ packages:
 
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
+
+  prettier-plugin-sort-json@4.0.0:
+    resolution: {integrity: sha512-zV5g+bWFD2zAqyQ8gCkwUTC49o9FxslaUdirwivt5GZHcf57hCocavykuyYqbExoEsuBOg8IU36OY7zmVEMOWA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      prettier: ^3.0.0
 
   prettier@3.3.3:
     resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
@@ -968,6 +983,10 @@ snapshots:
       brace-expansion: 1.1.11
 
   path-parse@1.0.7: {}
+
+  prettier-plugin-sort-json@4.0.0(prettier@3.3.3):
+    dependencies:
+      prettier: 3.3.3
 
   prettier@3.3.3: {}
 
