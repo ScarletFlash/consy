@@ -11,18 +11,23 @@
     "compiler__check:scripts": "tsc --project tsconfig.scripts.json --noEmit",
     "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
+    "extract-api": "api-extractor run --local --typescript-compiler-folder node_modules/typescript",
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
-  "devDependencies": {
+  "dependencies": {
     "@consy/core": "workspace:*",
+    "@consy/declarations": "workspace:*"
+  },
+  "devDependencies": {
     "@consy/configs": "workspace:*",
-    "@consy/declarations": "workspace:*",
     "typescript": "catalog:codebase",
     "ts-node": "catalog:build-tools",
     "esbuild": "catalog:build-tools",
     "@types/node": "catalog:build-tools",
     "@npm/types": "catalog:build-tools",
     "dts-bundle-generator": "catalog:build-tools",
-    "prettier": "catalog:codebase"
-  }
+    "prettier": "catalog:codebase",
+    "@microsoft/api-extractor": "catalog:build-tools"
+  },
+  "typings": "src/index.ts"
 }

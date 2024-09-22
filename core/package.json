@@ -7,12 +7,16 @@
     "compiler__run": "tsc --project tsconfig.json",
     "compiler__check": "tsc --project tsconfig.json --noEmit",
     "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
-    "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ."
+    "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
+    "extract-api": "api-extractor run --local --typescript-compiler-folder node_modules/typescript"
+  },
+  "dependencies": {
+    "@consy/declarations": "workspace:*"
   },
   "devDependencies": {
     "@consy/configs": "workspace:*",
-    "@consy/declarations": "workspace:*",
     "typescript": "catalog:codebase",
-    "prettier": "catalog:codebase"
+    "prettier": "catalog:codebase",
+    "@microsoft/api-extractor": "catalog:build-tools"
   }
 }

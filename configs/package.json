@@ -10,7 +10,8 @@
     "prettier": "catalog:codebase"
   },
   "files": [
-    "./typescript/*.json",
+    "./api-extractor/*",
+    "./typescript/*",
     "./prettier/*"
   ]
 }

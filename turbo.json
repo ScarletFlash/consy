@@ -15,7 +15,7 @@
       "cache": true,
       "persistent": false,
       "inputs": ["./src/**/*.ts", "./tsconfig.json"],
-      "outputs": ["./tsc-out"],
+      "outputs": ["./tsc-out", "!./tsc-out/bundle.d.ts"],
       "outputLogs": "errors-only"
     },
     "compiler__check": {
@@ -28,7 +28,6 @@
       "cache": true,
       "persistent": false,
       "inputs": ["./**/*.{ts,yaml,yml,json,md}"],
-      "outputs": [],
       "dependsOn": ["//#formatter__check:root"],
       "outputLogs": "errors-only"
     },
@@ -36,8 +35,6 @@
       "cache": true,
       "persistent": false,
       "inputs": ["./*.*"],
-      "outputs": [],
-      "dependsOn": [],
       "outputLogs": "errors-only"
     },
     "formatter__fix": {
@@ -53,7 +50,14 @@
       "persistent": false,
       "inputs": ["./*.*", "!turbo.json"],
       "outputs": ["./*.*", "!turbo.json"],
-      "dependsOn": [],
+      "outputLogs": "errors-only"
+    },
+    "extract-api": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["api-extractor.json", "./tsc-out", "!./tsc-out/bundle.d.ts"],
+      "outputs": ["./tsc-out/bundle.d.ts"],
+      "dependsOn": ["compiler__run", "^extract-api"],
       "outputLogs": "errors-only"
     }
   }
