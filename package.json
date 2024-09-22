@@ -1,12 +1,7 @@
 {
-  "name": "consy",
+  "name": "@consy/root",
   "version": "0.0.1-reserve-name",
-  "license": "MIT",
-  "author": {
-    "email": "scarletflash.dev@gmail.com",
-    "name": "Fedor Usakov",
-    "url": "https://scarletflash.github.io/"
-  },
+  "private": true,
   "scripts": {
     "compiler__run": "turbo run compiler__run",
     "compiler__check": "turbo run compiler__check"

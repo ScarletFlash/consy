@@ -1,5 +1,8 @@
 {
   "name": "@consy/core",
+  "private": true,
+  "main": "src/index.ts",
+  "typings": "src/index.ts",
   "scripts": {
     "compiler__run": "tsc --project tsconfig.json",
     "compiler__check": "tsc --project tsconfig.json --noEmit"

@@ -1,5 +1,6 @@
 {
   "name": "@consy/configs",
+  "private": true,
   "devDependencies": {
     "typescript": "catalog:codebase"
   },
