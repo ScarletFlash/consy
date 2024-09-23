@@ -133,6 +133,31 @@ importers:
         specifier: catalog:codebase
         version: 5.6.2
 
+  examples:
+    dependencies:
+      consy:
+        specifier: workspace:*
+        version: link:../dist
+    devDependencies:
+      '@consy/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@types/node':
+        specifier: catalog:build-tools
+        version: 22.5.5
+      esbuild:
+        specifier: catalog:build-tools
+        version: 0.24.0
+      prettier:
+        specifier: catalog:codebase
+        version: 3.3.3
+      ts-node:
+        specifier: catalog:build-tools
+        version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+      typescript:
+        specifier: catalog:codebase
+        version: 5.6.2
+
   utilities:
     devDependencies:
       '@consy/configs':
