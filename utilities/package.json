@@ -1,5 +1,5 @@
 {
-  "name": "@consy/core",
+  "name": "@consy/utilities",
   "private": true,
   "main": "src/index.ts",
   "typings": "src/index.ts",
@@ -10,14 +10,11 @@
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
     "extract-api": "api-extractor run --local --typescript-compiler-folder node_modules/typescript"
   },
-  "dependencies": {
-    "@consy/declarations": "workspace:*",
-    "@consy/utilities": "workspace:*"
-  },
   "devDependencies": {
     "@consy/configs": "workspace:*",
-    "typescript": "catalog:codebase",
+    "@consy/declarations": "workspace:*",
     "prettier": "catalog:codebase",
+    "typescript": "catalog:codebase",
     "@microsoft/api-extractor": "catalog:build-tools"
   }
 }

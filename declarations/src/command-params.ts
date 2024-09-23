@@ -3,12 +3,13 @@ import { CommandParamType } from './command-param-type';
 import { CommandParamsDefinition } from './command-params-definition';
 
 type CommandParamDefinitionType<T extends CommandParamDefinitionBase> = T['type'];
-export type CommandParams<P extends CommandParamsDefinition = CommandParamsDefinition> = {
-  [K in keyof P]: CommandParamDefinitionType<P[K]> extends CommandParamType.String
+
+export type CommandParams<D extends CommandParamsDefinition = CommandParamsDefinition> = {
+  [K in keyof D]: CommandParamDefinitionType<D[K]> extends CommandParamType.String
     ? string
-    : CommandParamDefinitionType<P[K]> extends CommandParamType.Toggle
+    : CommandParamDefinitionType<D[K]> extends CommandParamType.Toggle
       ? boolean
-      : CommandParamDefinitionType<P[K]> extends CommandParamType.Select
+      : CommandParamDefinitionType<D[K]> extends CommandParamType.Select
         ? string[]
         : never;
 };

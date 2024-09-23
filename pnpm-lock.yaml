@@ -67,6 +67,9 @@ importers:
       '@consy/declarations':
         specifier: workspace:*
         version: link:../declarations
+      '@consy/utilities':
+        specifier: workspace:*
+        version: link:../utilities
     devDependencies:
       '@consy/configs':
         specifier: workspace:*
@@ -126,6 +129,24 @@ importers:
       ts-node:
         specifier: catalog:build-tools
         version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+      typescript:
+        specifier: catalog:codebase
+        version: 5.6.2
+
+  utilities:
+    devDependencies:
+      '@consy/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@consy/declarations':
+        specifier: workspace:*
+        version: link:../declarations
+      '@microsoft/api-extractor':
+        specifier: catalog:build-tools
+        version: 7.47.9(@types/node@22.5.5)
+      prettier:
+        specifier: catalog:codebase
+        version: 3.3.3
       typescript:
         specifier: catalog:codebase
         version: 5.6.2
