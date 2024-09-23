@@ -1,4 +1,5 @@
 import { CallableCommand, CommandDefinition, InteractiveObject } from '@consy/declarations';
+import { getValidatedParameterizableCommandParams, isParameterizableCommand } from '@consy/utilities';
 import { Acessor } from './accessor';
 
 export class InteractiveObjectBuilder {
@@ -9,17 +10,21 @@ export class InteractiveObjectBuilder {
     return this.#payload;
   }
 
-  public addCommand(command: CommandDefinition): void {
-    const collableCommand: CallableCommand = () => {
-      const commandResult: void | Promise<void> = command.callback({} as any);
+  public addCommand(commandDefinition: CommandDefinition): void {
+    const collableCommand: CallableCommand = (...callParams: unknown[]) => {
+      const commandResult: void | Promise<void> = commandDefinition.callback(
+        isParameterizableCommand(commandDefinition)
+          ? getValidatedParameterizableCommandParams({ commandDefinition, callParams })
+          : {}
+      );
 
-      const onDoneMessage: string = `Command ${command.name} is executed.`;
+      const onDoneMessage: string = `Command ${commandDefinition.name} is executed.`;
       commandResult instanceof Promise
         ? commandResult.finally(() => console.log(onDoneMessage))
         : console.log(onDoneMessage);
     };
 
-    this.#accessor.mount(command.name, collableCommand);
+    this.#accessor.mount(commandDefinition.name, collableCommand);
   }
 
   public removeCommand(name: string): void {
