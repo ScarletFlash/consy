@@ -1,7 +1,6 @@
 {
-  "name": "consy",
+  "name": "@consy/examples",
   "private": true,
-  "version": "0.0.1",
   "scripts": {
     "compiler__run": "pnpm run compiler__run:build && pnpm run compiler__run:scripts",
     "compiler__check": "pnpm run compiler__check:build && pnpm run compiler__check:scripts",
@@ -11,12 +10,10 @@
     "compiler__check:scripts": "tsc --project tsconfig.scripts.json --noEmit",
     "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
-    "extract-api": "api-extractor run --local --typescript-compiler-folder node_modules/typescript",
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
   "dependencies": {
-    "@consy/core": "workspace:*",
-    "@consy/declarations": "workspace:*"
+    "consy": "workspace:*"
   },
   "devDependencies": {
     "@consy/configs": "workspace:*",
@@ -24,10 +21,6 @@
     "ts-node": "catalog:build-tools",
     "esbuild": "catalog:build-tools",
     "@types/node": "catalog:build-tools",
-    "@npm/types": "catalog:build-tools",
-    "prettier": "catalog:codebase",
-    "@microsoft/api-extractor": "catalog:build-tools"
-  },
-  "typings": "src/index.ts",
-  "main": "src/index.ts"
+    "prettier": "catalog:codebase"
+  }
 }
