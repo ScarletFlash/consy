@@ -11,7 +11,7 @@ export class InteractiveObjectBuilder {
 
   public addCommand(command: CommandDefinition): void {
     const collableCommand: CallableCommand = () => {
-      const commandResult: void | Promise<void> = command.callback();
+      const commandResult: void | Promise<void> = command.callback({} as any);
 
       const onDoneMessage: string = `Command ${command.name} is executed.`;
       commandResult instanceof Promise
