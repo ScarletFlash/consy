@@ -3,15 +3,15 @@
   "version": "0.0.1-reserve-name",
   "private": true,
   "scripts": {
-    "compiler__run": "pnpm turbo compiler__run",
-    "compiler__check": "pnpm turbo compiler__check",
-    "formatter__check": "pnpm turbo formatter__check",
-    "formatter__fix": "pnpm turbo formatter__fix",
+    "compiler__run": "pnpm turbo run compiler__run",
+    "compiler__check": "pnpm turbo run compiler__check",
+    "formatter__check": "pnpm turbo run formatter__check",
+    "formatter__fix": "pnpm turbo run formatter__fix",
     "formatter__check:root": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check ./*",
     "formatter__fix:root": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ./*",
-    "extract-api": "pnpm turbo extract-api",
-    "build": "pnpm turbo build",
-    "turbo": "turbo run --no-cache"
+    "extract-api": "pnpm turbo run extract-api",
+    "build": "pnpm turbo run build",
+    "turbo": "turbo"
   },
   "devDependencies": {
     "@consy/configs": "workspace:*",
