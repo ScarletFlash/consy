@@ -5,3 +5,5 @@
 </p>
 
 ---
+
+> Work in progress. Not for production usage until 1.0.0.

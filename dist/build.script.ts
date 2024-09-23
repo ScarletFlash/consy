@@ -19,10 +19,14 @@ const PACKAGE_MANIFEST_FILE_NAME: string = 'package.json';
 const PACKAGE_MANIFEST_SOURCE_FILE_PATH: string = resolve(__dirname, PACKAGE_MANIFEST_FILE_NAME);
 const PACKAGE_MANIFEST_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, PACKAGE_MANIFEST_FILE_NAME);
 
+const README_FILE_NAME: string = 'README.md';
+const README_SOURCE_FILE_PATH: string = resolve(__dirname, '..', README_FILE_NAME);
+const README_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, README_FILE_NAME);
+
 (async () => {
   await rm(RESULT_BUNDLE_PATH, { recursive: true, force: true });
 
-  new Set([ENTRY_POINT_PATH, BUILD_TS_CONFIG_PATH, PACKAGE_MANIFEST_SOURCE_FILE_PATH]).forEach(
+  new Set([ENTRY_POINT_PATH, BUILD_TS_CONFIG_PATH, PACKAGE_MANIFEST_SOURCE_FILE_PATH, README_SOURCE_FILE_PATH]).forEach(
     async (entryPointPath: string) => {
       await access(entryPointPath);
     }
@@ -78,4 +82,6 @@ const PACKAGE_MANIFEST_BUNDLE_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, PA
   });
 
   await copyFile(TYPINGS_ENTRY_POINT_PATH, RESULT_BUNDLE_TYPINGS_PATH);
+
+  await copyFile(README_SOURCE_FILE_PATH, README_BUNDLE_FILE_PATH);
 })();

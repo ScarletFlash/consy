@@ -1,0 +1,83 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.sha }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./
+
+jobs:
+  run_publish:
+    runs-on: ubuntu-latest
+    name: Publish package to NPM
+    steps:
+      - name: "Fetch current Git commit history"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup turbo caches
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./.turbo/
+            !./.turbo/runs/
+          key: ${{ runner.os }}-turbo-${{ github.workflow }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-${{ github.workflow }}-
+            ${{ runner.os }}-turbo-
+          save-always: true
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Publish package
+        run: |
+          cd dist
+
+          CURRENT_VERSION=$(grep --only-matching --perl-regexp '"version":\s*"\K[^"]+' package.json)
+          TARGET_VERSION="$CURRENT_VERSION-sha.${{github.sha}}"
+
+          if pnpm view @sibe-io/mesh-file-postprocessor@"${TARGET_VERSION}" > /dev/null 2>&1; then
+            echo "Version already exists. Skipping publish."
+          else
+            cd bundle
+
+            pnpm version ${TARGET_VERSION}
+            pnpm config set //registry.npmjs.org/:_authToken ${NODE_AUTH_TOKEN}
+            pnpm publish --access public --no-git-checks
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      - name: Save turbo logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: turbo-run-logs
+          path: ./.turbo/runs/
+          if-no-files-found: warn
+          retention-days: 1
