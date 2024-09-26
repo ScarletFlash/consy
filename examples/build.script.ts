@@ -69,7 +69,9 @@ const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
     format: 'esm',
     treeShaking: true,
     charset: DEFAULT_CHARSET,
-    legalComments: 'external'
+    legalComments: 'none',
+    keepNames: true,
+    entryNames: '[dir]/[name]'
   });
 
   const { host, port }: ServeResult = await buildContext.serve({ servedir: SERVE_PATH });
