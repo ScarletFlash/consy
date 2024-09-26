@@ -1,6 +1,7 @@
+import { exec } from 'child_process';
 import { BuildContext, context, ServeResult } from 'esbuild';
 import { Dirent } from 'fs';
-import { access, mkdir, readdir, readFile, rm, writeFile } from 'fs/promises';
+import { access, copyFile, mkdir, readdir, readFile, rm, writeFile } from 'fs/promises';
 import { basename, dirname, join, resolve } from 'path';
 
 const DEFAULT_CHARSET: 'utf8' = 'utf8';
@@ -8,41 +9,68 @@ const DEFAULT_CHARSET: 'utf8' = 'utf8';
 const SERVE_PATH: string = resolve(__dirname, 'serve');
 
 const ENTRY_POINT_FILE_NAME: string = 'index';
-const TS_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.ts`;
 const LAYOUT_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.html`;
+const GLOBAL_STYLES_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.css`;
 
 const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
+
+const SOURCE_CODE_DIRECTORY_PATH: string = resolve(__dirname, 'src');
+
+const ROOT_LAYOUT_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
+const GLOBAL_STYLES_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
+
+interface GenerateCssParams {
+  globalStylesInput: string;
+  globalStylesOutput: string;
+  contentPaths: string[];
+}
+
+async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput }: GenerateCssParams) {
+  return new Promise<void>((resolve: () => void, reject: (error: Error) => void) => {
+    exec(
+      `tailwindcss --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
+    ).on('close', (code: number) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Tailwind CSS process exited with code ${code}`));
+      }
+    });
+  });
+}
 
 (async () => {
   await rm(SERVE_PATH, { recursive: true, force: true });
   await mkdir(SERVE_PATH, { recursive: true });
 
-  new Set([BUILD_TS_CONFIG_PATH]).forEach(async (entryPointPath: string) => {
-    await access(entryPointPath);
-  });
+  new Set([BUILD_TS_CONFIG_PATH, ROOT_LAYOUT_ENTRY_POINT, GLOBAL_STYLES_ENTRY_POINT]).forEach(
+    async (entryPointPath: string) => {
+      await access(entryPointPath);
+    }
+  );
 
-  const nestedDirectories: Dirent[] = (
-    await readdir(__dirname, {
+  const sourceCodeNestedDirectories: Dirent[] = (
+    await readdir(SOURCE_CODE_DIRECTORY_PATH, {
       withFileTypes: true
     })
   ).filter((entry: Dirent) => entry.isDirectory());
 
-  const typeScriptEntryPoints: string[] = (
+  const rawEntryPoints: string[] = (
     await Promise.all(
-      nestedDirectories.map(async (directory: Dirent): Promise<string | null> => {
-        const directoryPath: string = resolve(__dirname, directory.name);
+      sourceCodeNestedDirectories.map(async (directory: Dirent): Promise<string | null> => {
+        const directoryPath: string = resolve(SOURCE_CODE_DIRECTORY_PATH, directory.name);
         const directoryFiles: string[] = await readdir(directoryPath);
-        return directoryFiles.includes(TS_ENTRY_POINT_FILE_NAME) ? join(directoryPath, TS_ENTRY_POINT_FILE_NAME) : null;
+        return directoryFiles.some((fileName: string) => fileName.startsWith(ENTRY_POINT_FILE_NAME))
+          ? join(directoryPath, ENTRY_POINT_FILE_NAME)
+          : null;
       })
     )
   ).filter((entryPointFilePath: string | null): entryPointFilePath is string => entryPointFilePath !== null);
 
+  const layoutEntryPoints: string[] = rawEntryPoints.map((rawEntryPoint: string): string => `${rawEntryPoint}.html`);
+
   await Promise.all(
-    typeScriptEntryPoints.map(async (typeScriptEntryPoint: string): Promise<void> => {
-      const layoutEntryPoint: string = typeScriptEntryPoint.replace(
-        TS_ENTRY_POINT_FILE_NAME,
-        LAYOUT_ENTRY_POINT_FILE_NAME
-      );
+    layoutEntryPoints.map(async (layoutEntryPoint: string): Promise<void> => {
       await access(layoutEntryPoint);
 
       const serveLayoutDirectoryPath: string = join(SERVE_PATH, basename(dirname(layoutEntryPoint)));
@@ -58,8 +86,19 @@ const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
     })
   );
 
+  const serveRootLayoutPath: string = join(SERVE_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
+  await copyFile(ROOT_LAYOUT_ENTRY_POINT, serveRootLayoutPath);
+
+  const serveGlobalStylesPath: string = join(SERVE_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
+
+  await generateCss({
+    globalStylesInput: GLOBAL_STYLES_ENTRY_POINT,
+    globalStylesOutput: serveGlobalStylesPath,
+    contentPaths: layoutEntryPoints.concat([ROOT_LAYOUT_ENTRY_POINT])
+  });
+
   const buildContext: BuildContext = await context({
-    entryPoints: typeScriptEntryPoints,
+    entryPoints: rawEntryPoints.map((rawEntryPoint: string): string => `${rawEntryPoint}.ts`),
     outdir: SERVE_PATH,
     platform: 'browser',
     tsconfig: BUILD_TS_CONFIG_PATH,
@@ -75,5 +114,6 @@ const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
   });
 
   const { host, port }: ServeResult = await buildContext.serve({ servedir: SERVE_PATH });
+
   console.log(`Serving at ${host}:${port}`);
 })();
