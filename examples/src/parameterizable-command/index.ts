@@ -30,16 +30,17 @@ function addRows({ rowsCount, firstIncomingRowIndex, tableBody }: AddRowsParams)
     const rowElement: HTMLTableRowElement = document.createElement('tr');
 
     const indexCell: HTMLTableCellElement = document.createElement('td');
-    indexCell.textContent = String(firstIncomingRowIndex + createdRowsCount);
+    indexCell.textContent = String(firstIncomingRowIndex + createdRowsCount + 1);
     rowElement.appendChild(indexCell);
 
     const createdDateCell: HTMLTableCellElement = document.createElement('td');
-    createdDateCell.textContent = new Date().toISOString();
     rowElement.appendChild(createdDateCell);
 
-    const groupMarkCell: HTMLTableCellElement = document.createElement('td');
-    groupMarkCell.style.backgroundColor = colorHex;
-    rowElement.appendChild(groupMarkCell);
+    const createdDateWithGroupMarkContainer: HTMLElement = document.createElement('section');
+    createdDateWithGroupMarkContainer.style.borderRightColor = colorHex;
+    createdDateWithGroupMarkContainer.className = 'p-2 border-r-8 contrast-[95%]';
+    createdDateWithGroupMarkContainer.textContent = new Date().toISOString();
+    createdDateCell.appendChild(createdDateWithGroupMarkContainer);
 
     tableBody.appendChild(rowElement);
     createdRowsCount++;

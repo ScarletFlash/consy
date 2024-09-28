@@ -1,7 +1,7 @@
 <!doctype html>
 <html
   lang="en"
-  class="w-screen h-screen bg-neutral-300 [&_*]:overflow-visible"
+  class="min-w-screen min-h-screen bg-neutral-300"
 >
   <head>
     <meta charset="utf-8" />
@@ -16,16 +16,17 @@
     />
   </head>
 
-  <body class="size-full p-4">
-    <table class="w-full bg-neutral-100 rounded">
-      <thead>
+  <body class="size-full p-4 overflow-auto">
+    <table
+      class="w-full bg-neutral-100 rounded-lg relative [&_th]:p-2 [&_td]:p-2 [&_thead_tr:first-child]:rounded-l-lg [&_thead_tr:last-child]:rounded-r-lg [&_tbody_tr:last-child_td:first-child]:rounded-bl-lg [&_tbody_tr:last-child_td:last-child]:rounded-br-lg overflow-visible [&_tr_td:first-child]:text-right [&_tr_td:last-child]:text-center"
+    >
+      <thead class="sticky top-0 left-0 z-10 backdrop-blur-sm bg-slate-200/50 rounded-lg border-slate-500/75">
         <tr>
-          <th>#</th>
-          <th>Creation Date</th>
-          <th>Group Mark</th>
+          <th class="text-right">№</th>
+          <th class="text-center">Creation Date</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody class="[&_>:nth-child(odd)]:bg-slate-50"></tbody>
     </table>
 
     <script
