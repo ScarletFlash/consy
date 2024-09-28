@@ -7,3 +7,7 @@
 ---
 
 > Work in progress. Not for production usage until 1.0.0.
+
+<p align="center">
+  <img width="740" src="https://github.com/ScarletFlash/consy/raw/main/assets/usage-sample.gif">
+</p>
