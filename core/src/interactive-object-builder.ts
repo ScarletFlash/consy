@@ -3,11 +3,16 @@ import { getValidatedParameterizableCommandParams, isParameterizableCommand } fr
 import { Acessor } from './accessor';
 
 export class InteractiveObjectBuilder {
-  readonly #payload: InteractiveObject = {};
-  readonly #accessor: Acessor<CallableCommand> = new Acessor<CallableCommand>(this.#payload);
+  readonly #payload: InteractiveObject;
+  readonly #accessor: Acessor<CallableCommand>;
 
   public get payload(): InteractiveObject {
     return this.#payload;
+  }
+
+  constructor() {
+    this.#payload = Object.setPrototypeOf({}, null);
+    this.#accessor = new Acessor<CallableCommand>(this.#payload);
   }
 
   public addCommand(commandDefinition: CommandDefinition): void {
