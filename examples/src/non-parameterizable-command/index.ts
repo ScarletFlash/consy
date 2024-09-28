@@ -1,18 +1,25 @@
 import { Core as ConsyCore } from 'consy';
 
+const body: HTMLBodyElement | null = document.querySelector('body');
+if (body === null) {
+  throw new Error('The body element is missing.');
+}
+
+const pausedAnimationClassName: string = '[&_[data-type=orbit]]:[animation-play-state:paused]';
+
 new ConsyCore('consy')
   .addCommand({
-    name: 'rotateForwards',
-    description: 'Rotate the page content forwards.',
+    name: 'pauseRotation',
+    description: 'Pauses the rotation of planet orbits.',
     callback: () => {
-      console.log('Rotating forwards.');
+      body.classList.add(pausedAnimationClassName);
     }
   })
   .addCommand({
-    name: 'rotateBackwards',
-    description: 'Rotate the page content backwards.',
+    name: 'continueRotation',
+    description: 'Continues the rotation of planet orbits.',
     callback: () => {
-      console.log('Rotating backwards.');
+      body.classList.remove(pausedAnimationClassName);
     }
   })
   .mount();

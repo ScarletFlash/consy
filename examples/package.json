@@ -10,7 +10,7 @@
     "compiler__check:scripts": "tsc --project tsconfig.scripts.json --noEmit",
     "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
-    "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
+    "start": "ts-node --project tsconfig.scripts.json ./start.script.ts"
   },
   "dependencies": {
     "consy": "workspace:*",
