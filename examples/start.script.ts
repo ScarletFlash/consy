@@ -68,6 +68,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
   ).filter((entryPointFilePath: string | null): entryPointFilePath is string => entryPointFilePath !== null);
 
   const layoutEntryPoints: string[] = rawEntryPoints.map((rawEntryPoint: string): string => `${rawEntryPoint}.html`);
+  const typeScriptEntryPoints: string[] = rawEntryPoints.map((rawEntryPoint: string): string => `${rawEntryPoint}.ts`);
 
   await Promise.all(
     layoutEntryPoints.map(async (layoutEntryPoint: string): Promise<void> => {
@@ -94,11 +95,11 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
   await generateCss({
     globalStylesInput: GLOBAL_STYLES_ENTRY_POINT,
     globalStylesOutput: serveGlobalStylesPath,
-    contentPaths: layoutEntryPoints.concat([ROOT_LAYOUT_ENTRY_POINT])
+    contentPaths: layoutEntryPoints.concat(typeScriptEntryPoints).concat(ROOT_LAYOUT_ENTRY_POINT)
   });
 
   const buildContext: BuildContext = await context({
-    entryPoints: rawEntryPoints.map((rawEntryPoint: string): string => `${rawEntryPoint}.ts`),
+    entryPoints: typeScriptEntryPoints,
     outdir: SERVE_PATH,
     platform: 'browser',
     tsconfig: BUILD_TS_CONFIG_PATH,
@@ -115,5 +116,5 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
 
   const { host, port }: ServeResult = await buildContext.serve({ servedir: SERVE_PATH });
 
-  console.log(`Serving at ${host}:${port}`);
+  console.log(`Serving at http://${host}:${port}/`);
 })();

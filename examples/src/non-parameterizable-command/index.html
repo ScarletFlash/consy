@@ -1,7 +1,128 @@
 <!doctype html>
+<html
+  lang="en"
+  class="w-screen h-screen bg-neutral-900 [&_*]:overflow-visible"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-<html lang="en">
-  <body class="bg-[#ff0101]">
+    <link
+      rel="stylesheet"
+      href="./../index.css"
+    />
+  </head>
+
+  <body class="size-full">
+    <section
+      class="size-full relative flex items-center justify-center [&_*]:rounded-full [&_[data-type=star]]:absolute [&_[data-type=orbit]]:absolute [&_[data-type=orbit]]:flex [&_[data-type=orbit]]:justify-center [&_[data-type=orbit]]:animate-spin [&_[data-type=planet]]:transform [&_[data-type=planet]]:-translate-y-1/2"
+    >
+      <section
+        data-name="sun"
+        data-type="star"
+        class="size-[25vw] bg-yellow-500 shadow-[0_0_50px_-12px_rgba(234,_179,_8,_.5)] border-none"
+      ></section>
+
+      <section
+        data-name="mercury-orbit"
+        data-type="orbit"
+        class="size-[27.09vw] ![animation-duration:2.4s]"
+      >
+        <section
+          data-name="mercury"
+          data-type="planet"
+          class="size-[0.09vw] bg-slate-400"
+        ></section>
+      </section>
+
+      <section
+        data-name="venus-orbit"
+        data-type="orbit"
+        class="size-[29.31vw] ![animation-duration:6.2s]"
+      >
+        <section
+          data-name="venus"
+          data-type="planet"
+          class="size-[0.22vw] bg-yellow-50"
+        ></section>
+      </section>
+
+      <section
+        data-name="earth-orbit"
+        data-type="orbit"
+        class="size-[31.54vw] ![animation-duration:10s]"
+      >
+        <section
+          data-name="earth"
+          data-type="planet"
+          class="size-[0.23vw] bg-sky-500"
+        ></section>
+      </section>
+
+      <section
+        data-name="mars-orbit"
+        data-type="orbit"
+        class="size-[33.66vw] ![animation-duration:18.8s]"
+      >
+        <section
+          data-name="mars"
+          data-type="planet"
+          class="size-[0.12vw] bg-red-800"
+        ></section>
+      </section>
+
+      <section
+        data-name="jupiter-orbit"
+        data-type="orbit"
+        class="size-[38.16vw] ![animation-duration:120s]"
+      >
+        <section
+          data-name="jupiter"
+          data-type="planet"
+          class="size-[2.5vw] bg-orange-700"
+        ></section>
+      </section>
+
+      <section
+        data-name="saturn-orbit"
+        data-type="orbit"
+        class="size-[44vw] ![animation-duration:290s]"
+      >
+        <section
+          data-name="saturn"
+          data-type="planet"
+          class="size-[2.27vw] bg-yellow-200"
+        ></section>
+      </section>
+
+      <section
+        data-name="uranus-orbit"
+        data-type="orbit"
+        class="size-[48.39vw] ![animation-duration:840s]"
+      >
+        <section
+          data-name="uranus"
+          data-type="planet"
+          class="size-[0.96vw] bg-cyan-200"
+        ></section>
+      </section>
+
+      <section
+        data-name="neptune-orbit"
+        data-type="orbit"
+        class="size-[51.28vw] ![animation-duration:1650s]"
+      >
+        <section
+          data-name="neptune"
+          data-type="planet"
+          class="size-[0.89vw] bg-blue-600"
+        ></section>
+      </section>
+    </section>
+
     <script
       type="module"
       src="index.ts"
