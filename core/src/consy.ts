@@ -2,7 +2,7 @@ import { CommandDefinition, InteractiveObject } from '@consy/declarations';
 import { Acessor } from './accessor';
 import { InteractiveObjectBuilder } from './interactive-object-builder';
 
-export class Core<K extends string = string> {
+export class Consy<K extends string = string> {
   readonly #interactor: InteractiveObjectBuilder = new InteractiveObjectBuilder();
 
   readonly #accessor: Acessor<InteractiveObject, K> = new Acessor<InteractiveObject, K>(window);

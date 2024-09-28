@@ -1,4 +1,4 @@
-import { Core as ConsyCore } from 'consy';
+import { Consy } from 'consy';
 
 const body: HTMLBodyElement | null = document.querySelector('body');
 if (body === null) {
@@ -7,7 +7,7 @@ if (body === null) {
 
 const pausedAnimationClassName: string = '[&_[data-type=orbit]]:[animation-play-state:paused]';
 
-new ConsyCore('consy')
+new Consy('consy')
   .addCommand({
     name: 'pauseRotation',
     description: 'Pauses the rotation of planet orbits.',

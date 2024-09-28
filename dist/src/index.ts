@@ -1,7 +1,7 @@
-export { Core } from '@consy/core';
+export { Consy } from '@consy/core';
 export {
   CommandDefinition,
   CommandParamType,
-  ParameterizableCommand,
-  NonParameterizableCommand
+  NonParameterizableCommand,
+  ParameterizableCommand
 } from '@consy/declarations';

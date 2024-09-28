@@ -1,4 +1,4 @@
-import { CommandParamType, Core as ConsyCore, ParameterizableCommand } from 'consy';
+import { CommandParamType, Consy, ParameterizableCommand } from 'consy';
 
 const rawTableBody: HTMLTableSectionElement | null = document.querySelector('tbody');
 
@@ -46,7 +46,7 @@ function addRows({ rowsCount, firstIncomingRowIndex, tableBody }: AddRowsParams)
   }
 }
 
-new ConsyCore('consy')
+new Consy('consy')
   .addCommand({
     name: 'clearTable',
     description: 'Clears the table.',
