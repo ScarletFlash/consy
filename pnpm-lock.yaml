@@ -13,7 +13,7 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     '@types/node':
-      specifier: ^22.5.0
+      specifier: ^22.0.0
       version: 22.5.5
     esbuild:
       specifier: ~0.24.0
@@ -25,6 +25,9 @@ catalogs:
       specifier: ^10.0.0
       version: 10.9.2
   codebase:
+    chrome-types:
+      specifier: ^0.1.0
+      version: 0.1.307
     prettier:
       specifier: ^3.0.0
       version: 3.3.3
@@ -51,6 +54,15 @@ importers:
       turbo:
         specifier: catalog:codebase
         version: 2.1.2
+
+  assets:
+    devDependencies:
+      '@consy/configs':
+        specifier: workspace:*
+        version: link:../configs
+      prettier:
+        specifier: catalog:codebase
+        version: 3.3.3
 
   configs:
     dependencies:
@@ -141,9 +153,6 @@ importers:
       consy:
         specifier: workspace:*
         version: link:../dist
-      tailwindcss:
-        specifier: catalog:build-tools
-        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
     devDependencies:
       '@consy/configs':
         specifier: workspace:*
@@ -157,6 +166,42 @@ importers:
       prettier:
         specifier: catalog:codebase
         version: 3.3.3
+      tailwindcss:
+        specifier: catalog:build-tools
+        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
+      ts-node:
+        specifier: catalog:build-tools
+        version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+      typescript:
+        specifier: catalog:codebase
+        version: 5.6.2
+
+  extension:
+    devDependencies:
+      '@consy/assets':
+        specifier: workspace:*
+        version: link:../assets
+      '@consy/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@npm/types':
+        specifier: catalog:build-tools
+        version: 2.0.0
+      '@types/node':
+        specifier: catalog:build-tools
+        version: 22.5.5
+      chrome-types:
+        specifier: catalog:codebase
+        version: 0.1.307
+      esbuild:
+        specifier: catalog:build-tools
+        version: 0.24.0
+      prettier:
+        specifier: catalog:codebase
+        version: 3.3.3
+      tailwindcss:
+        specifier: catalog:build-tools
+        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
       ts-node:
         specifier: catalog:build-tools
         version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
@@ -522,6 +567,9 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
+  chrome-types@0.1.307:
+    resolution: {integrity: sha512-IbwiExo5HCD41m1cJ1veai3rhz26K/Ig+L3dsw59GpJkOHwtzPxvq1FJprt6xk6ZH0MCrbcZSA5g0wLPpOXsYQ==}
+
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
@@ -735,8 +783,8 @@ packages:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
 
-  package-json-from-dist@1.0.0:
-    resolution: {integrity: sha512-dATvCeZN/8wQsGywez1mzHtTlP22H8OEfPrVMLNr4/eGa+ijtLn/6M5f0dY8UKNrC2O9UCU6SSoG3qRKnt7STw==}
+  package-json-from-dist@1.0.1:
+    resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
 
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
@@ -1323,6 +1371,8 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  chrome-types@0.1.307: {}
+
   color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
@@ -1430,7 +1480,7 @@ snapshots:
       jackspeak: 3.4.3
       minimatch: 9.0.5
       minipass: 7.1.2
-      package-json-from-dist: 1.0.0
+      package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
 
   graceful-fs@4.2.11: {}
@@ -1526,7 +1576,7 @@ snapshots:
 
   object-hash@3.0.0: {}
 
-  package-json-from-dist@1.0.0: {}
+  package-json-from-dist@1.0.1: {}
 
   path-key@3.1.1: {}
 

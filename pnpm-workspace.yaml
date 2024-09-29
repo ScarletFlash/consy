@@ -4,7 +4,7 @@ packages:
 catalogs:
   build-tools:
     '@npm/types': ^2.0.0
-    '@types/node': ^22.5.0
+    '@types/node': ^22.0.0
     ts-node: ^10.0.0
     esbuild: ~0.24.0
     '@microsoft/api-extractor': ^7.0.0
@@ -15,3 +15,4 @@ catalogs:
     typescript: ~5.6.0
     prettier: ^3.0.0
     prettier-plugin-sort-json: ^4.0.0
+    chrome-types: ^0.1.0

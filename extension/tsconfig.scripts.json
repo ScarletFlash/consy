@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@consy/configs/typescript/node.json",
+  "include": ["*.script.ts"]
+}
