@@ -13,10 +13,10 @@
     "start": "ts-node --project tsconfig.scripts.json ./start.script.ts"
   },
   "dependencies": {
-    "consy": "workspace:*",
-    "tailwindcss": "catalog:build-tools"
+    "consy": "workspace:*"
   },
   "devDependencies": {
+    "tailwindcss": "catalog:build-tools",
     "@consy/configs": "workspace:*",
     "typescript": "catalog:codebase",
     "ts-node": "catalog:build-tools",

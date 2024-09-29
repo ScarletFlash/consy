@@ -19,6 +19,8 @@ const SOURCE_CODE_DIRECTORY_PATH: string = resolve(__dirname, 'src');
 const ROOT_LAYOUT_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
 const GLOBAL_STYLES_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
 
+const SERVE_ROOT_LAYOUT_ENTRY_POINT: string = join(SERVE_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
+
 interface GenerateCssParams {
   globalStylesInput: string;
   globalStylesOutput: string;
@@ -30,11 +32,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     exec(
       `tailwindcss --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
     ).on('close', (code: number) => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`Tailwind CSS process exited with code ${code}`));
-      }
+      code === 0 ? resolve() : reject(new Error(`Tailwind CSS process exited with code ${code}`));
     });
   });
 }
@@ -87,8 +85,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     })
   );
 
-  const serveRootLayoutPath: string = join(SERVE_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
-  await copyFile(ROOT_LAYOUT_ENTRY_POINT, serveRootLayoutPath);
+  await copyFile(ROOT_LAYOUT_ENTRY_POINT, SERVE_ROOT_LAYOUT_ENTRY_POINT);
 
   const serveGlobalStylesPath: string = join(SERVE_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
 
