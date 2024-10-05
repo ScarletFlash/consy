@@ -10,6 +10,9 @@
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
+  "dependencies": {
+    "@consy/declarations": "workspace:*"
+  },
   "devDependencies": {
     "tailwindcss": "catalog:build-tools",
     "ts-node": "catalog:build-tools",

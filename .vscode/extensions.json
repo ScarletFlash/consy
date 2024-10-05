@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "Vercel.turbo-vsc",
+    "bierner.markdown-mermaid",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml"
+  ]
+}

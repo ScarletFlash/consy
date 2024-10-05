@@ -1,6 +1,6 @@
-import { CommandParamDefinitionBase } from './command-param-definition-base';
-import { CommandParamType } from './command-param-type';
-import { CommandParamsDefinition } from './command-params-definition';
+import { CommandParamDefinitionBase } from './command-param-definition-base.type';
+import { CommandParamType } from './command-param-type.type';
+import { CommandParamsDefinition } from './command-params-definition.type';
 
 type CommandParamDefinitionType<T extends CommandParamDefinitionBase> = T['type'];
 

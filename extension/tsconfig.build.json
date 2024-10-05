@@ -1,8 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "outDir": "./tsc-out"
+    "outDir": "./tsc-out",
+    "types": ["chrome-types"],
+    "declaration": false
   },
   "extends": "@consy/configs/typescript/browser.json",
-  "include": ["src"]
+  "include": ["./src"]
 }

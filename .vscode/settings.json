@@ -1,0 +1,7 @@
+{
+  "references.preferredLocation": "view",
+  "turbo.useLocalTurbo": true,
+  "typescript.check.npmIsInstalled": true,
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "./node_modules/typescript/lib"
+}
