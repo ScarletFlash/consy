@@ -1,15 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/chrome-manifest",
   "action": {
-    "default_popup": "src/index.html",
+    "default_popup": "src/popup.html",
     "default_icon": {
       "16": "node_modules/@consy/assets/icon-16.png",
       "24": "node_modules/@consy/assets/icon-24.png",
       "32": "node_modules/@consy/assets/icon-32.png"
     }
   },
+  "background": {
+    "service_worker": "src/service-worker.ts"
+  },
   "description": "Consy UI extension",
   "manifest_version": 3,
   "name": "Consy",
+  "permissions": ["scripting", "activeTab"],
   "version": "0.0.1"
 }

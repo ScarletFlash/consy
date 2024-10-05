@@ -9,7 +9,7 @@ export class Acessor<P, K extends string = string> {
   }
 
   public mount(key: K, payload: P): void {
-    if (Acessor.#isHostWithTarget(this.#host, key)) {
+    if (this.isMounted(key)) {
       throw new Error(`Key ${key} is already mounted. Either unmount it first or use a different key.`);
     }
 
@@ -22,20 +22,20 @@ export class Acessor<P, K extends string = string> {
   }
 
   public unmount(key: K): void {
-    if (!Acessor.#isHostWithTarget(this.#host, key)) {
+    if (!this.isMounted(key)) {
       throw new Error(`Key ${key} is not mounted, so it cannot be unmounted.`);
     }
     delete this.#host[key];
   }
 
   public getValue(key: K): P {
-    if (!Acessor.#isHostWithTarget<P, K>(this.#host, key)) {
+    if (!this.isMounted(key)) {
       throw new Error(`Key ${key} is not mounted, so it cannot be accessed.`);
     }
     return this.#host[key];
   }
 
-  static #isHostWithTarget<P, K extends string>(host: Host, key: K): host is Host & Target<P, K> {
-    return key in host;
+  public isMounted(key: K): boolean {
+    return key in this.#host;
   }
 }

@@ -4,5 +4,5 @@
     "outDir": "./tsc-out"
   },
   "extends": "@consy/configs/typescript/browser.json",
-  "include": ["src"]
+  "include": ["./src"]
 }

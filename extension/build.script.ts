@@ -8,10 +8,10 @@ const DEFAULT_CHARSET: 'utf8' = 'utf8';
 
 const RESULT_BUNDLE_PATH: string = resolve(__dirname, 'unpacked-extension');
 
-const ENTRY_POINT_FILE_NAME: string = 'index';
-const ENTRY_POINT_PATH: string = resolve(__dirname, 'src', `${ENTRY_POINT_FILE_NAME}.ts`);
-const LAYOUT_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.html`;
-const GLOBAL_STYLES_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.css`;
+const POPUP_FILE_NAME: string = 'popup';
+const POPUP_SCRIPT_PATH: string = resolve(__dirname, 'src', `${POPUP_FILE_NAME}.ts`);
+const POPUP_LAYOUT_FILE_NAME: string = `${POPUP_FILE_NAME}.html`;
+const POPUP_STYLES_FILE_NAME: string = `${POPUP_FILE_NAME}.css`;
 
 const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
 
@@ -25,10 +25,10 @@ const EXTENSION_MANIFEST_RESULT_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, 
 const SOURCE_CODE_DIRECTORY_NAME: string = 'src';
 const SOURCE_CODE_DIRECTORY_PATH: string = resolve(__dirname, SOURCE_CODE_DIRECTORY_NAME);
 
-const ROOT_LAYOUT_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, LAYOUT_ENTRY_POINT_FILE_NAME);
-const GLOBAL_STYLES_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
+const ROOT_LAYOUT_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, POPUP_LAYOUT_FILE_NAME);
+const GLOBAL_STYLES_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, POPUP_STYLES_FILE_NAME);
 
-const RESULT_BUNDLE_GLOBAL_STYLES_ENTRY_POINT: string = join(RESULT_BUNDLE_PATH, GLOBAL_STYLES_ENTRY_POINT_FILE_NAME);
+const RESULT_BUNDLE_GLOBAL_STYLES_ENTRY_POINT: string = join(RESULT_BUNDLE_PATH, POPUP_STYLES_FILE_NAME);
 
 const SOURCE_ASSETS_DIRECTORY_PATH: string = resolve(__dirname, 'node_modules/@consy/assets/');
 const RESULT_BUNDLE_ASSETS_DIRECTORY_PATH: string = join(RESULT_BUNDLE_PATH, 'assets');
@@ -54,7 +54,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
   await mkdir(RESULT_BUNDLE_PATH, { recursive: true });
 
   new Set([
-    ENTRY_POINT_PATH,
+    POPUP_SCRIPT_PATH,
     BUILD_TS_CONFIG_PATH,
     PACKAGE_MANIFEST_SOURCE_FILE_PATH,
     GLOBAL_STYLES_ENTRY_POINT,
@@ -88,7 +88,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     tsconfig: BUILD_TS_CONFIG_PATH,
     bundle: true,
     minify: true,
-    splitting: true,
+    splitting: false,
     format: 'esm',
     treeShaking: true,
     charset: DEFAULT_CHARSET,
@@ -115,6 +115,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
   const modifiedManifestContent: string = rawManifestContent
     .replaceAll(`${SOURCE_CODE_DIRECTORY_NAME}/`, '')
     .replaceAll('node_modules/@consy/assets/', 'assets/')
+    .replaceAll('.ts"', '.js"')
     .replace(`"$schema": "https://json.schemastore.org/chrome-manifest",`, '');
 
   await writeFile(EXTENSION_MANIFEST_RESULT_FILE_PATH, modifiedManifestContent, { encoding: DEFAULT_CHARSET });

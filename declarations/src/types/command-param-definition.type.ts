@@ -1,5 +1,5 @@
-import { CommandParamDefinitionBase } from './command-param-definition-base';
-import { CommandParamType } from './command-param-type';
+import { CommandParamDefinitionBase } from './command-param-definition-base.type';
+import { CommandParamType } from './command-param-type.type';
 
 type StringParamDefinition = CommandParamDefinitionBase<CommandParamType.String>;
 
