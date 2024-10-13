@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "./tsc-out/scripts"
+  },
   "extends": "@consy/configs/typescript/node.json",
   "include": ["*.script.ts"]
 }

@@ -12,6 +12,8 @@
     "service_worker": "src/service-worker.ts"
   },
   "description": "Consy UI extension",
+  "host_permissions": ["https://*/*", "http://*/*"],
+
   "manifest_version": 3,
   "name": "Consy",
   "permissions": ["scripting", "activeTab"],
