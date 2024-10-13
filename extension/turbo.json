@@ -2,6 +2,40 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
+    "compiler__run:build": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./src/**/*.ts", "./tsconfig.build.json"],
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "compiler__run:scripts": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["*.script.ts", "tsconfig.scripts.json"],
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "compiler__run": {
+      "dependsOn": ["compiler__run:build", "compiler__run:scripts"]
+    },
+    "compiler__check:build": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["./src/**/*.ts", "./tsconfig.build.json"],
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "compiler__check:scripts": {
+      "cache": true,
+      "persistent": false,
+      "inputs": ["*.script.ts", "tsconfig.scripts.json"],
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "compiler__check": {
+      "dependsOn": ["compiler__check:build", "compiler__check:scripts"]
+    },
     "build": {
       "inputs": ["src/index.ts", "build.script.ts", "tsconfig.*.json"],
       "outputs": ["./dist"],

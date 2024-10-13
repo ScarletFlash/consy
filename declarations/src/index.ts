@@ -1,3 +1,4 @@
+export * from './helpers/accessor';
 export * from './constants/exposed-keys-property-name.const';
 export * from './types/callable-command.type';
 export * from './types/command-definition.type';

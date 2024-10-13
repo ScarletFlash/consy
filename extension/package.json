@@ -4,8 +4,12 @@
   "main": "src/index.ts",
   "typings": "src/index.ts",
   "scripts": {
-    "compiler__run": "tsc --project tsconfig.json",
-    "compiler__check": "tsc --project tsconfig.json --noEmit",
+    "compiler__run": "",
+    "compiler__run:build": "tsc --project tsconfig.build.json",
+    "compiler__run:scripts": "tsc --project tsconfig.scripts.json",
+    "compiler__check": "",
+    "compiler__check:build": "tsc --project tsconfig.build.json --noEmit",
+    "compiler__check:scripts": "tsc --project tsconfig.scripts.json --noEmit",
     "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"

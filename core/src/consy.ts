@@ -1,5 +1,4 @@
-import { CommandDefinition, EXPOSED_KEYS_PROPERTY_NAME, InteractiveObject } from '@consy/declarations';
-import { Acessor } from './accessor';
+import { Acessor, CommandDefinition, EXPOSED_KEYS_PROPERTY_NAME, InteractiveObject } from '@consy/declarations';
 import { InteractiveObjectBuilder } from './interactive-object-builder';
 
 export class Consy<K extends string = string> {
