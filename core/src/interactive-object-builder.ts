@@ -1,6 +1,5 @@
-import { CallableCommand, CommandDefinition, InteractiveObject } from '@consy/declarations';
+import { Acessor, CallableCommand, CommandDefinition, InteractiveObject } from '@consy/declarations';
 import { getValidatedParameterizableCommandParams, isParameterizableCommand } from '@consy/utilities';
-import { Acessor } from './accessor';
 
 export class InteractiveObjectBuilder {
   readonly #payload: InteractiveObject;

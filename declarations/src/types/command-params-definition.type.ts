@@ -1,4 +1,4 @@
-import { CommandParamDefinition } from './command-param-definition';
+import { CommandParamDefinition } from './command-param-definition.type';
 
 export interface CommandParamsDefinition {
   readonly [key: string]: CommandParamDefinition;

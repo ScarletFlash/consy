@@ -63,6 +63,11 @@
       "cache": true,
       "persistent": false,
       "outputLogs": "errors-only"
+    },
+    "start": {
+      "cache": false,
+      "persistent": true,
+      "outputLogs": "full"
     }
   },
   "ui": "stream"

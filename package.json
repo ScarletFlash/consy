@@ -11,6 +11,7 @@
     "formatter__fix:root": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ./*",
     "extract-api": "pnpm turbo run extract-api",
     "build": "pnpm turbo run build",
+    "start": "pnpm turbo run start",
     "turbo": "turbo"
   },
   "devDependencies": {
@@ -19,8 +20,8 @@
     "prettier": "catalog:codebase"
   },
   "engines": {
-    "pnpm": "9.10.0",
+    "pnpm": "9.12.0",
     "node": "22.8.0"
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "pnpm@9.12.0"
 }

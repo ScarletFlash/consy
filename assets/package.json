@@ -1,0 +1,15 @@
+{
+  "name": "@consy/assets",
+  "private": true,
+  "scripts": {
+    "formatter__check": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --check .",
+    "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write ."
+  },
+  "devDependencies": {
+    "@consy/configs": "workspace:*",
+    "prettier": "catalog:codebase"
+  },
+  "files": [
+    "./*.png"
+  ]
+}
