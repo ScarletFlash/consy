@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
+      - 'main'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.sha }}-${{ github.event_name }}
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish package to NPM
     steps:
-      - name: "Fetch current Git commit history"
+      - name: 'Fetch current Git commit history'
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
@@ -62,7 +62,7 @@ jobs:
           CURRENT_VERSION=$(grep --only-matching --perl-regexp '"version":\s*"\K[^"]+' package.json)
           TARGET_VERSION="$CURRENT_VERSION-sha.${{github.sha}}"
 
-          if pnpm view @sibe-io/mesh-file-postprocessor@"${TARGET_VERSION}" > /dev/null 2>&1; then
+          if pnpm view consy@"${TARGET_VERSION}" > /dev/null 2>&1; then
             echo "Version already exists. Skipping publish."
           else
             cd bundle
