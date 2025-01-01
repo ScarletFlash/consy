@@ -29,17 +29,17 @@ catalogs:
       specifier: ^0.1.0
       version: 0.1.307
     prettier:
-      specifier: ^3.0.0
-      version: 3.3.3
+      specifier: ^3.4.0
+      version: 3.4.2
     prettier-plugin-sort-json:
       specifier: ^4.0.0
       version: 4.0.0
     turbo:
-      specifier: ~2.1.0
-      version: 2.1.2
+      specifier: ~2.3.0
+      version: 2.3.3
     typescript:
-      specifier: ~5.6.0
-      version: 5.6.2
+      specifier: ^5.7.0
+      version: 5.7.2
 
 importers:
 
@@ -50,10 +50,10 @@ importers:
         version: link:configs
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       turbo:
         specifier: catalog:codebase
-        version: 2.1.2
+        version: 2.3.3
 
   assets:
     devDependencies:
@@ -62,20 +62,20 @@ importers:
         version: link:../configs
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
 
   configs:
     dependencies:
       prettier-plugin-sort-json:
         specifier: catalog:codebase
-        version: 4.0.0(prettier@3.3.3)
+        version: 4.0.0(prettier@3.4.2)
     devDependencies:
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   core:
     dependencies:
@@ -94,10 +94,10 @@ importers:
         version: 7.47.9(@types/node@22.5.5)
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   declarations:
     devDependencies:
@@ -109,10 +109,10 @@ importers:
         version: 7.47.9(@types/node@22.5.5)
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   dist:
     dependencies:
@@ -140,13 +140,13 @@ importers:
         version: 0.24.0
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       ts-node:
         specifier: catalog:build-tools
-        version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+        version: 10.9.2(@types/node@22.5.5)(typescript@5.7.2)
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   examples:
     dependencies:
@@ -165,16 +165,16 @@ importers:
         version: 0.24.0
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       tailwindcss:
         specifier: catalog:build-tools
-        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
+        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2))
       ts-node:
         specifier: catalog:build-tools
-        version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+        version: 10.9.2(@types/node@22.5.5)(typescript@5.7.2)
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   extension:
     dependencies:
@@ -202,16 +202,16 @@ importers:
         version: 0.24.0
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       tailwindcss:
         specifier: catalog:build-tools
-        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
+        version: 3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2))
       ts-node:
         specifier: catalog:build-tools
-        version: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+        version: 10.9.2(@types/node@22.5.5)(typescript@5.7.2)
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
   utilities:
     devDependencies:
@@ -226,10 +226,10 @@ importers:
         version: 7.47.9(@types/node@22.5.5)
       prettier:
         specifier: catalog:codebase
-        version: 3.3.3
+        version: 3.4.2
       typescript:
         specifier: catalog:codebase
-        version: 5.6.2
+        version: 5.7.2
 
 packages:
 
@@ -863,8 +863,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  prettier@3.3.3:
-    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -995,38 +995,38 @@ packages:
       '@swc/wasm':
         optional: true
 
-  turbo-darwin-64@2.1.2:
-    resolution: {integrity: sha512-3TEBxHWh99h2yIzkuIigMEOXt/ItYQp0aPiJjPd1xN4oDcsKK5AxiFKPH9pdtfIBzYsY59kQhZiFj0ELnSP7Bw==}
+  turbo-darwin-64@2.3.3:
+    resolution: {integrity: sha512-bxX82xe6du/3rPmm4aCC5RdEilIN99VUld4HkFQuw+mvFg6darNBuQxyWSHZTtc25XgYjQrjsV05888w1grpaA==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.1.2:
-    resolution: {integrity: sha512-he0miWNq2WxJzsH82jS2Z4MXpnkzn9SH8a79iPXiJkq25QREImucscM4RPasXm8wARp91pyysJMq6aasD45CeA==}
+  turbo-darwin-arm64@2.3.3:
+    resolution: {integrity: sha512-DYbQwa3NsAuWkCUYVzfOUBbSUBVQzH5HWUFy2Kgi3fGjIWVZOFk86ss+xsWu//rlEAfYwEmopigsPYSmW4X15A==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.1.2:
-    resolution: {integrity: sha512-fKUBcc0rK8Vdqv5a/E3CSpMBLG1bzwv+Q0Q83F8fG2ZfNCNKGbcEYABdonNZkkx141Rj03cZQFCgxu3MVEGU+A==}
+  turbo-linux-64@2.3.3:
+    resolution: {integrity: sha512-eHj9OIB0dFaP6BxB88jSuaCLsOQSYWBgmhy2ErCu6D2GG6xW3b6e2UWHl/1Ho9FsTg4uVgo4DB9wGsKa5erjUA==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.1.2:
-    resolution: {integrity: sha512-sV8Bpmm0WiuxgbhxymcC7wSsuxfBBieI98GegSwbr/bs1ANAgzCg93urIrdKdQ3/b31zZxQwcaP4FBF1wx1Qdg==}
+  turbo-linux-arm64@2.3.3:
+    resolution: {integrity: sha512-NmDE/NjZoDj1UWBhMtOPmqFLEBKhzGS61KObfrDEbXvU3lekwHeoPvAMfcovzswzch+kN2DrtbNIlz+/rp8OCg==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.1.2:
-    resolution: {integrity: sha512-wcmIJZI9ORT9ykHGliFE6kWRQrlH930QGSjSgWC8uFChFFuOyUlvC7ttcxuSvU9VqC7NF4C+GVAcFJQ8lTjN7g==}
+  turbo-windows-64@2.3.3:
+    resolution: {integrity: sha512-O2+BS4QqjK3dOERscXqv7N2GXNcqHr9hXumkMxDj/oGx9oCatIwnnwx34UmzodloSnJpgSqjl8iRWiY65SmYoQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.1.2:
-    resolution: {integrity: sha512-zdnXjrhk7YO6CP+Q5wPueEvOCLH4lDa6C4rrwiakcWcPgcQGbVozJlo4uaQ6awo8HLWQEvOwu84RkWTdLAc/Hw==}
+  turbo-windows-arm64@2.3.3:
+    resolution: {integrity: sha512-dW4ZK1r6XLPNYLIKjC4o87HxYidtRRcBeo/hZ9Wng2XM/MqqYkAyzJXJGgRMsc0MMEN9z4+ZIfnSNBrA0b08ag==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.1.2:
-    resolution: {integrity: sha512-Jb0rbU4iHEVQ18An/YfakdIv9rKnd3zUfSE117EngrfWXFHo3RndVH96US3GsT8VHpwTncPePDBT2t06PaFLrw==}
+  turbo@2.3.3:
+    resolution: {integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==}
     hasBin: true
 
   typescript@5.4.2:
@@ -1034,8 +1034,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.6.2:
-    resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1611,13 +1611,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.47
 
-  postcss-load-config@4.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2)):
+  postcss-load-config@4.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.5.1
     optionalDependencies:
       postcss: 8.4.47
-      ts-node: 10.9.2(@types/node@22.5.5)(typescript@5.6.2)
+      ts-node: 10.9.2(@types/node@22.5.5)(typescript@5.7.2)
 
   postcss-nested@6.2.0(postcss@8.4.47):
     dependencies:
@@ -1637,11 +1637,11 @@ snapshots:
       picocolors: 1.1.0
       source-map-js: 1.2.1
 
-  prettier-plugin-sort-json@4.0.0(prettier@3.3.3):
+  prettier-plugin-sort-json@4.0.0(prettier@3.4.2):
     dependencies:
-      prettier: 3.3.3
+      prettier: 3.4.2
 
-  prettier@3.3.3: {}
+  prettier@3.4.2: {}
 
   punycode@2.3.1: {}
 
@@ -1727,7 +1727,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  tailwindcss@3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2)):
+  tailwindcss@3.4.13(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -1746,7 +1746,7 @@ snapshots:
       postcss: 8.4.47
       postcss-import: 15.1.0(postcss@8.4.47)
       postcss-js: 4.0.1(postcss@8.4.47)
-      postcss-load-config: 4.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2))
+      postcss-load-config: 4.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2))
       postcss-nested: 6.2.0(postcss@8.4.47)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -1768,7 +1768,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@types/node@22.5.5)(typescript@5.6.2):
+  ts-node@10.9.2(@types/node@22.5.5)(typescript@5.7.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -1782,40 +1782,40 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.6.2
+      typescript: 5.7.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  turbo-darwin-64@2.1.2:
+  turbo-darwin-64@2.3.3:
     optional: true
 
-  turbo-darwin-arm64@2.1.2:
+  turbo-darwin-arm64@2.3.3:
     optional: true
 
-  turbo-linux-64@2.1.2:
+  turbo-linux-64@2.3.3:
     optional: true
 
-  turbo-linux-arm64@2.1.2:
+  turbo-linux-arm64@2.3.3:
     optional: true
 
-  turbo-windows-64@2.1.2:
+  turbo-windows-64@2.3.3:
     optional: true
 
-  turbo-windows-arm64@2.1.2:
+  turbo-windows-arm64@2.3.3:
     optional: true
 
-  turbo@2.1.2:
+  turbo@2.3.3:
     optionalDependencies:
-      turbo-darwin-64: 2.1.2
-      turbo-darwin-arm64: 2.1.2
-      turbo-linux-64: 2.1.2
-      turbo-linux-arm64: 2.1.2
-      turbo-windows-64: 2.1.2
-      turbo-windows-arm64: 2.1.2
+      turbo-darwin-64: 2.3.3
+      turbo-darwin-arm64: 2.3.3
+      turbo-linux-64: 2.3.3
+      turbo-linux-arm64: 2.3.3
+      turbo-windows-64: 2.3.3
+      turbo-windows-arm64: 2.3.3
 
   typescript@5.4.2: {}
 
-  typescript@5.6.2: {}
+  typescript@5.7.2: {}
 
   undici-types@6.19.8: {}
 
