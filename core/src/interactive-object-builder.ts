@@ -2,19 +2,10 @@ import { Acessor, CallableCommand, CommandDefinition, InteractiveObject } from '
 import { getValidatedParameterizableCommandParams, isParameterizableCommand } from '@consy/utilities';
 
 export class InteractiveObjectBuilder {
-  readonly #payload: InteractiveObject;
-  readonly #accessor: Acessor<CallableCommand>;
-
-  public get payload(): InteractiveObject {
-    return this.#payload;
-  }
-
-  constructor() {
-    this.#payload = Object.setPrototypeOf({}, null);
-    this.#accessor = new Acessor<CallableCommand>(this.#payload);
-  }
-
-  public addCommand(commandDefinition: CommandDefinition): void {
+  public static addCommand<T extends InteractiveObject, C extends CommandDefinition>(
+    target: T,
+    commandDefinition: C
+  ): asserts target is T & Record<C['name'], C['callback']> {
     const collableCommand: CallableCommand = (...callParams: unknown[]) => {
       const commandResult: void | Promise<void> = commandDefinition.callback(
         isParameterizableCommand(commandDefinition)
@@ -28,10 +19,13 @@ export class InteractiveObjectBuilder {
         : console.log(onDoneMessage);
     };
 
-    this.#accessor.mount(commandDefinition.name, collableCommand);
+    new Acessor<CallableCommand>(target).mount(commandDefinition.name, collableCommand);
   }
 
-  public removeCommand(name: string): void {
-    this.#accessor.unmount(name);
+  public static removeCommand<T extends InteractiveObject, N extends string>(
+    target: T,
+    name: N
+  ): asserts target is T & Record<N, never> {
+    new Acessor<CallableCommand>(target).unmount(name);
   }
 }
