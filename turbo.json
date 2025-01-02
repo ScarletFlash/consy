@@ -60,7 +60,7 @@
       "outputLogs": "errors-only"
     },
     "build": {
-      "cache": true,
+      "cache": false,
       "persistent": false,
       "outputLogs": "errors-only"
     },

@@ -1,4 +1,4 @@
-import { CommandParamType, Consy, ParameterizableCommand } from 'consy';
+import { CommandParamType, Consy } from 'consy';
 
 const rawTableBody: HTMLTableSectionElement | null = document.querySelector('tbody');
 
@@ -67,7 +67,7 @@ new Consy('consy')
         type: CommandParamType.String
       }
     },
-    callback: (({ count }: { count: string }) => {
+    callback: ({ count }) => {
       const rowsCount: number = Number(count);
       if (Number.isNaN(rowsCount)) {
         throw new Error('The count parameter is not a number.');
@@ -79,11 +79,6 @@ new Consy('consy')
 
       const firstIncomingRowIndex: number = rawTableBody.rows.length ?? 0;
       addRows({ rowsCount, firstIncomingRowIndex, tableBody: rawTableBody });
-    }) as any
-  } satisfies ParameterizableCommand<{
-    count: {
-      type: CommandParamType.String;
-    };
-  }>)
-
+    }
+  })
   .mount();

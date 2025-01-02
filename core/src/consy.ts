@@ -1,8 +1,16 @@
-import { Acessor, CommandDefinition, EXPOSED_KEYS_PROPERTY_NAME, InteractiveObject } from '@consy/declarations';
+import {
+  Acessor,
+  CommandDefinition,
+  CommandParamsDefinition,
+  EXPOSED_KEYS_PROPERTY_NAME,
+  InteractiveObject,
+  NonParameterizableCommand,
+  ParameterizableCommand
+} from '@consy/declarations';
 import { InteractiveObjectBuilder } from './interactive-object-builder';
 
 export class Consy<K extends string = string> {
-  readonly #interactor: InteractiveObjectBuilder = new InteractiveObjectBuilder();
+  readonly #interactor: InteractiveObject = Object.setPrototypeOf({}, null);
 
   readonly #interactiveObjectAccessor: Acessor<InteractiveObject, K> = new Acessor<InteractiveObject, K>(window);
   readonly #exposedKeysAccessor: Acessor<string[], string> = new Acessor<string[], string>(window);
@@ -18,7 +26,7 @@ export class Consy<K extends string = string> {
   }
 
   public mount(): this {
-    this.#interactiveObjectAccessor.mount(this.#key, this.#interactor.payload);
+    this.#interactiveObjectAccessor.mount(this.#key, this.#interactor);
 
     const isExposedKeysPropertyMounted: boolean = this.#exposedKeysAccessor.isMounted(EXPOSED_KEYS_PROPERTY_NAME);
     if (!isExposedKeysPropertyMounted) {
@@ -51,13 +59,15 @@ export class Consy<K extends string = string> {
     return this;
   }
 
+  public addCommand<D extends CommandParamsDefinition>(command: ParameterizableCommand<D>): this;
+  public addCommand(command: NonParameterizableCommand): this;
   public addCommand(command: CommandDefinition): this {
-    this.#interactor.addCommand(command);
+    InteractiveObjectBuilder.addCommand(this.#interactor, command);
     return this;
   }
 
   public removeCommand(name: string): this {
-    this.#interactor.removeCommand(name);
+    InteractiveObjectBuilder.removeCommand(this.#interactor, name);
     return this;
   }
 }
