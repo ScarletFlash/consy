@@ -1,23 +1,54 @@
-import { MessageBus } from './communication/message-bus';
+import { CumulativeMessageHandler } from './communication/cumulative-message-handler';
+import { MessageBase } from './communication/message-base';
 import { MountedInstancesMessage } from './communication/messages/mounted-instances.message';
-import { NotMountedMessage } from './communication/messages/not-mounted.message';
+import { UpdateRequiredMessage } from './communication/messages/update-required.message';
 
-const messageBus: MessageBus = new MessageBus();
+const cumulativeHandler: CumulativeMessageHandler = new CumulativeMessageHandler().provide<MountedInstancesMessage>(
+  MountedInstancesMessage.type,
+  (payload) => {
+    const isMounted: boolean = payload.length !== 0;
 
-messageBus.subscribe((messageData: unknown) => {
-  switch (true) {
-    case NotMountedMessage.isMessageData(messageData): {
-      console.log('Not mounted');
-      return;
-    }
+    isMounted ? showMountedPlaceholder() : showNotMountedPlaceholder();
 
-    case MountedInstancesMessage.isMessageData(messageData): {
-      console.log(messageData.payload);
-      return;
-    }
-
-    default: {
-      return;
-    }
+    const mountedKeysSection = document.createElement('section');
+    mountedKeysSection.innerText = JSON.stringify(payload);
+    document.body.appendChild(mountedKeysSection);
   }
+);
+
+chrome.runtime.onMessage.addListener((data: unknown): undefined => {
+  if (!MessageBase.isMessageData(data)) {
+    return;
+  }
+  cumulativeHandler.handle(data);
 });
+
+chrome.runtime.sendMessage(new UpdateRequiredMessage());
+
+function getContainer(): HTMLElement {
+  const container: HTMLElement | null = document.querySelector('body > main');
+  if (container === null) {
+    throw new Error('No container found');
+  }
+  return container;
+}
+
+function showNotMountedPlaceholder(): void {
+  const container: HTMLElement = getContainer();
+
+  const placeholder: HTMLElement = document.createElement('section');
+  placeholder.className = 'flex items-center justify-center h-full text-red-500';
+  placeholder.innerText = 'Consy is not mounted';
+
+  container.replaceChildren(placeholder);
+}
+
+function showMountedPlaceholder(): void {
+  const container: HTMLElement = getContainer();
+
+  const placeholder: HTMLElement = document.createElement('section');
+  placeholder.className = 'flex items-center justify-center h-full text-green-500';
+  placeholder.innerText = 'Consy is mounted';
+
+  container.replaceChildren(placeholder);
+}

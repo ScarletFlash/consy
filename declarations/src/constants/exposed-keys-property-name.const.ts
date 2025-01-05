@@ -1,1 +1,1 @@
-export const EXPOSED_KEYS_PROPERTY_NAME: string = '__consy_exposed-keys';
+export const EXPOSED_KEYS_PROPERTY_NAME: '__consy_exposed-keys' = '__consy_exposed-keys';

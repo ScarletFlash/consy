@@ -1,5 +1,5 @@
+import { MessageBase } from './message-base';
 import { Message } from './message';
-import { MessageData } from './message-data';
 
 type SubscriptionCallback<T = unknown> = (payload: T) => void;
 type MessageEventListener = (event: MessageEvent) => void;
@@ -7,34 +7,35 @@ type MessageEventListener = (event: MessageEvent) => void;
 export class MessageBus {
   #channel: BroadcastChannel = new BroadcastChannel('__consy-message-bus');
 
-  #eventListenerBySubscriptionCallback: Map<SubscriptionCallback<MessageData>, MessageEventListener> = new Map<
-    SubscriptionCallback<MessageData>,
+  #eventListenerBySubscriptionCallback: Map<SubscriptionCallback<Message>, MessageEventListener> = new Map<
+    SubscriptionCallback<Message>,
     MessageEventListener
   >();
 
-  public publish(message: MessageData): void {
+  public publish(message: Message): void {
     console.log('Publishing message', message);
 
     this.#channel.postMessage(message);
   }
 
-  public subscribe(callback: SubscriptionCallback<MessageData>): void {
+  public subscribe(callback: SubscriptionCallback<Message>): void {
     if (this.#eventListenerBySubscriptionCallback.has(callback)) {
       return;
     }
 
     const messageEventListener: MessageEventListener = (event: MessageEvent) => {
-      const payload: unknown = event.data;
-      if (!Message.isAbstractMessageData(payload)) {
-        throw new Error(`Received event doesn't contain a compatible message data object`);
+      const messageData: unknown = event.data;
+      if (MessageBase.isMessageData(messageData)) {
+        callback(messageData);
+        return;
       }
-      callback(payload);
+      throw new Error('Invalid message data');
     };
     this.#channel.addEventListener('message', messageEventListener);
     this.#eventListenerBySubscriptionCallback.set(callback, messageEventListener);
   }
 
-  public unsubscribe(callback: SubscriptionCallback<MessageData>): void {
+  public unsubscribe(callback: SubscriptionCallback<Message>): void {
     const messageEventListener: MessageEventListener | undefined =
       this.#eventListenerBySubscriptionCallback.get(callback);
     if (messageEventListener === undefined) {
@@ -47,7 +48,7 @@ export class MessageBus {
 
   public close(): void {
     this.#eventListenerBySubscriptionCallback.forEach(
-      (_listener: MessageEventListener, callback: SubscriptionCallback<MessageData>) => {
+      (_listener: MessageEventListener, callback: SubscriptionCallback<Message>) => {
         this.unsubscribe(callback);
       }
     );

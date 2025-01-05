@@ -1,11 +1,6 @@
-import { MessageData } from './message-data';
-
-export abstract class Message<P extends {}> implements MessageData<P> {
-  abstract readonly type: Lowercase<string>;
-
-  constructor(public readonly payload: P) {}
-
-  public static isAbstractMessageData(message: unknown): message is MessageData {
-    return typeof message === 'object' && message !== null && 'type' in message;
-  }
+export interface Message<P extends {} = {}> {
+  readonly type: Lowercase<string>;
+  readonly payload: P;
+  /** @deprecated replace with a better alternative to ensure that all consumers and publishers are compatible with each other */
+  readonly isConsyMessage: true;
 }

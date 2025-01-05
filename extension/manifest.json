@@ -11,11 +11,22 @@
   "background": {
     "service_worker": "src/service-worker.ts"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/injected-content.ts"]
+    }
+  ],
   "description": "Consy UI extension",
   "host_permissions": ["https://*/*", "http://*/*"],
-
   "manifest_version": 3,
   "name": "Consy",
   "permissions": ["scripting", "activeTab"],
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "web_accessible_resources": [
+    {
+      "resources": ["src/injected-content.ts", "src/injectable-content-script.ts"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

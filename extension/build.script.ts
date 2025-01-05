@@ -89,7 +89,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     bundle: true,
     minify: true,
     splitting: false,
-    format: 'esm',
+    format: 'iife',
     treeShaking: true,
     charset: DEFAULT_CHARSET,
     legalComments: 'none',

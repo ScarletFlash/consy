@@ -1,54 +1,37 @@
-import { MessageBus } from './communication/message-bus';
+import { MessageBase } from './communication/message-base';
 import { MountedInstancesMessage } from './communication/messages/mounted-instances.message';
-import { NotMountedMessage } from './communication/messages/not-mounted.message';
+import { UpdateRequiredMessage } from './communication/messages/update-required.message';
 
-const messageBus: MessageBus = new MessageBus();
+const mountedInstanceKeysByTabId: Map<number, string[]> = new Map<number, string[]>();
 
-messageBus.subscribe((messageData: unknown) => {
-  switch (true) {
-    case NotMountedMessage.isMessageData(messageData): {
-      console.log('Not mounted');
-      return;
-    }
-
-    case MountedInstancesMessage.isMessageData(messageData): {
-      console.log(messageData.payload);
-      return;
-    }
-
-    default: {
-      return;
-    }
+chrome.runtime.onMessage.addListener((data: unknown, sender: chrome.runtime.MessageSender): undefined => {
+  if (!MessageBase.isMessageData(data)) {
+    return;
   }
-});
 
-try {
-  chrome.tabs.onUpdated.addListener(
-    async (
-      tabId: number,
-      changeInfo: {
-        status?: chrome.tabs.TabStatus;
-      },
-      tab: chrome.tabs.Tab
-    ) => {
-      if (changeInfo.status !== 'complete' || tab.url === undefined) {
+  const tabId = sender.tab?.id;
+
+  if (UpdateRequiredMessage.isMessageData(data)) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: chrome.tabs.Tab[]) => {
+      const activeTabId: number | undefined = tabs[0]?.id;
+      if (activeTabId === undefined) {
         return;
       }
 
-      if (tabId === undefined) {
-        throw new Error('No active tab ID found');
-      }
+      const activeTabInstanceKeys: string[] = mountedInstanceKeysByTabId.get(activeTabId) ?? [];
+      chrome.runtime.sendMessage(new MountedInstancesMessage(activeTabInstanceKeys.map((key: string) => ({ key }))));
+    });
+  }
 
-      const [injectionResult]: chrome.scripting.InjectionResult[] = await chrome.scripting.executeScript({
-        target: { tabId, allFrames: true },
-        files: ['injected-script.js']
-      });
+  if (MountedInstancesMessage.isMessageData(data) && tabId) {
+    mountedInstanceKeysByTabId.set(
+      tabId,
+      data.payload.map(({ key }) => key)
+    );
+    chrome.runtime.sendMessage(new MountedInstancesMessage(data.payload));
+  }
+});
 
-      if (injectionResult === undefined) {
-        throw new Error('Script injection failed');
-      }
-    }
-  );
-} catch (error: unknown) {
-  console.error(error instanceof Error ? error.message : 'Unknown error');
-}
+chrome.tabs.onRemoved.addListener((tabId: number) => {
+  mountedInstanceKeysByTabId.delete(tabId);
+});
