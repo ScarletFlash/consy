@@ -1,8 +1,10 @@
+import { InstanceExposedInfo } from '@consy/declarations';
 import { MessageBase } from '../message-base';
 import { MessageData } from '../message-data.type';
 
-interface MountedInstance {
+export interface MountedInstance {
   key: string;
+  commands: InstanceExposedInfo;
 }
 
 export class MountedInstancesMessage extends MessageBase<MountedInstance[]> {

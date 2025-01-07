@@ -2,20 +2,33 @@ import {
   Acessor,
   CommandDefinition,
   CommandParamsDefinition,
-  EXPOSED_KEYS_PROPERTY_NAME,
+  EXPOSED_INFO_PROPERTY_NAME,
+  ExposedInfo,
+  InstanceExposedInfo,
   InteractiveObject,
   NonParameterizableCommand,
   ParameterizableCommand
 } from '@consy/declarations';
+import { isParameterizableCommand } from '@consy/utilities';
 import { InteractiveObjectBuilder } from './interactive-object-builder';
 
 export class Consy<K extends string = string> {
   readonly #interactor: InteractiveObject = Object.setPrototypeOf({}, null);
 
-  readonly #interactiveObjectAccessor: Acessor<InteractiveObject, K> = new Acessor<InteractiveObject, K>(window);
-  readonly #exposedKeysAccessor: Acessor<string[], string> = new Acessor<string[], string>(window);
+  readonly #instanceExposedInfo: ExposedInfo = {};
 
   readonly #key: K;
+
+  readonly #interactiveObjectAccessor: Acessor<InteractiveObject, K> = new Acessor<InteractiveObject, K>(window);
+  readonly #exposedInfoAccessor: Acessor<ExposedInfo, typeof EXPOSED_INFO_PROPERTY_NAME> = new Acessor<
+    ExposedInfo,
+    typeof EXPOSED_INFO_PROPERTY_NAME
+  >(window);
+
+  readonly #instanceExposedInfoAccessor: Acessor<InstanceExposedInfo, string> = new Acessor<
+    InstanceExposedInfo,
+    string
+  >(this.#instanceExposedInfo);
 
   constructor(key: K) {
     if (key.length === 0) {
@@ -28,15 +41,12 @@ export class Consy<K extends string = string> {
   public mount(): this {
     this.#interactiveObjectAccessor.mount(this.#key, this.#interactor);
 
-    const isExposedKeysPropertyMounted: boolean = this.#exposedKeysAccessor.isMounted(EXPOSED_KEYS_PROPERTY_NAME);
-    if (!isExposedKeysPropertyMounted) {
-      this.#exposedKeysAccessor.mount(EXPOSED_KEYS_PROPERTY_NAME, []);
+    const isExposedInfoPropertyMounted: boolean = this.#exposedInfoAccessor.isMounted(EXPOSED_INFO_PROPERTY_NAME);
+    if (!isExposedInfoPropertyMounted) {
+      this.#exposedInfoAccessor.mount(EXPOSED_INFO_PROPERTY_NAME, {});
     }
-    const rawExposedKeys: string[] = this.#exposedKeysAccessor.getValue(EXPOSED_KEYS_PROPERTY_NAME);
-    if (rawExposedKeys.includes(this.#key)) {
-      throw new Error(`The key "${this.#key}" is already used by a different instance of Consy.`);
-    }
-    rawExposedKeys.push(this.#key);
+    const exposedInfo: ExposedInfo = this.#exposedInfoAccessor.getValue(EXPOSED_INFO_PROPERTY_NAME);
+    new Acessor(exposedInfo).mount(this.#key, this.#instanceExposedInfo);
 
     return this;
   }
@@ -44,30 +54,32 @@ export class Consy<K extends string = string> {
   public unmount(): this {
     this.#interactiveObjectAccessor.unmount(this.#key);
 
-    const isExposedKeysPropertyMounted: boolean = this.#exposedKeysAccessor.isMounted(EXPOSED_KEYS_PROPERTY_NAME);
+    const isExposedKeysPropertyMounted: boolean = this.#exposedInfoAccessor.isMounted(EXPOSED_INFO_PROPERTY_NAME);
     if (!isExposedKeysPropertyMounted) {
       throw new Error('The exposed keys property is not mounted, so it cannot be unmounted.');
     }
-    const rawExposedKeys: string[] = this.#exposedKeysAccessor.getValue(EXPOSED_KEYS_PROPERTY_NAME);
-
-    const keyIndex: number = rawExposedKeys.indexOf(this.#key);
-    if (keyIndex === -1) {
-      throw new Error(`The key "${this.#key}" is not used by any instance of Consy.`);
-    }
-    rawExposedKeys.splice(keyIndex, 1);
+    const exposedInfo: ExposedInfo = this.#exposedInfoAccessor.getValue(EXPOSED_INFO_PROPERTY_NAME);
+    new Acessor(exposedInfo).unmount(this.#key);
 
     return this;
   }
 
-  public addCommand<D extends CommandParamsDefinition>(command: ParameterizableCommand<D>): this;
-  public addCommand(command: NonParameterizableCommand): this;
-  public addCommand(command: CommandDefinition): this {
-    InteractiveObjectBuilder.addCommand(this.#interactor, command);
+  public addCommand<D extends CommandParamsDefinition>(commandDefinition: ParameterizableCommand<D>): this;
+  public addCommand(commandDefinition: NonParameterizableCommand): this;
+  public addCommand(commandDefinition: CommandDefinition): this {
+    InteractiveObjectBuilder.addCommand(this.#interactor, commandDefinition);
+    this.#instanceExposedInfoAccessor.mount(
+      commandDefinition.name,
+      isParameterizableCommand(commandDefinition) ? commandDefinition.params : {}
+    );
+
     return this;
   }
 
   public removeCommand(name: string): this {
     InteractiveObjectBuilder.removeCommand(this.#interactor, name);
+    this.#instanceExposedInfoAccessor.unmount(name);
+
     return this;
   }
 }

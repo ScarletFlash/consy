@@ -1,5 +1,5 @@
-import { MessageBase } from './message-base';
 import { Message } from './message';
+import { MessageBase } from './message-base';
 
 type SubscriptionCallback<T = unknown> = (payload: T) => void;
 type MessageEventListener = (event: MessageEvent) => void;
@@ -13,8 +13,6 @@ export class MessageBus {
   >();
 
   public publish(message: Message): void {
-    console.log('Publishing message', message);
-
     this.#channel.postMessage(message);
   }
 

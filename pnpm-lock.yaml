@@ -181,6 +181,9 @@ importers:
       '@consy/declarations':
         specifier: workspace:*
         version: link:../declarations
+      '@consy/utilities':
+        specifier: workspace:*
+        version: link:../utilities
     devDependencies:
       '@consy/assets':
         specifier: workspace:*

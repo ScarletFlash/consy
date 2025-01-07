@@ -15,7 +15,8 @@
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
   "dependencies": {
-    "@consy/declarations": "workspace:*"
+    "@consy/declarations": "workspace:*",
+    "@consy/utilities": "workspace:*"
   },
   "devDependencies": {
     "tailwindcss": "catalog:build-tools",
