@@ -1,37 +1,53 @@
 import { MessageBase } from './communication/message-base';
-import { MountedInstancesMessage } from './communication/messages/mounted-instances.message';
+import { MountedInstance, MountedInstancesMessage } from './communication/messages/mounted-instances.message';
 import { UpdateRequiredMessage } from './communication/messages/update-required.message';
 
-const mountedInstanceKeysByTabId: Map<number, string[]> = new Map<number, string[]>();
+const mountedInstancesByTabId: Map<number, MountedInstance[]> = new Map<number, MountedInstance[]>();
+
+const enum MessageSource {
+  Extension = 'extension',
+  ContentScript = 'content-script'
+}
+
+async function getActiveTabId(): Promise<number | undefined> {
+  return new Promise((resolve: (value: number | undefined) => void) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: chrome.tabs.Tab[]) => {
+      resolve(tabs[0]?.id);
+    });
+  });
+}
 
 chrome.runtime.onMessage.addListener((data: unknown, sender: chrome.runtime.MessageSender): undefined => {
   if (!MessageBase.isMessageData(data)) {
     return;
   }
 
-  const tabId = sender.tab?.id;
+  const messageSource: MessageSource = sender.tab === undefined ? MessageSource.Extension : MessageSource.ContentScript;
 
-  if (UpdateRequiredMessage.isMessageData(data)) {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: chrome.tabs.Tab[]) => {
-      const activeTabId: number | undefined = tabs[0]?.id;
-      if (activeTabId === undefined) {
-        return;
-      }
+  (async () => {
+    const activeTabId: number | undefined = await getActiveTabId();
 
-      const activeTabInstanceKeys: string[] = mountedInstanceKeysByTabId.get(activeTabId) ?? [];
-      chrome.runtime.sendMessage(new MountedInstancesMessage(activeTabInstanceKeys.map((key: string) => ({ key }))));
-    });
-  }
+    if (activeTabId === undefined) {
+      return;
+    }
 
-  if (MountedInstancesMessage.isMessageData(data) && tabId) {
-    mountedInstanceKeysByTabId.set(
-      tabId,
-      data.payload.map(({ key }) => key)
-    );
-    chrome.runtime.sendMessage(new MountedInstancesMessage(data.payload));
-  }
+    if (messageSource === MessageSource.Extension) {
+      chrome.tabs.sendMessage(activeTabId, data);
+    }
+
+    if (UpdateRequiredMessage.isMessageData(data)) {
+      chrome.runtime.sendMessage(new MountedInstancesMessage(mountedInstancesByTabId.get(activeTabId) ?? []));
+      return;
+    }
+
+    if (MountedInstancesMessage.isMessageData(data) && messageSource === MessageSource.ContentScript) {
+      mountedInstancesByTabId.set(activeTabId, data.payload);
+      chrome.runtime.sendMessage(new MountedInstancesMessage(data.payload));
+      return;
+    }
+  })();
 });
 
 chrome.tabs.onRemoved.addListener((tabId: number) => {
-  mountedInstanceKeysByTabId.delete(tabId);
+  mountedInstancesByTabId.delete(tabId);
 });

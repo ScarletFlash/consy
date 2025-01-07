@@ -15,9 +15,9 @@ export class CumulativeMessageHandler {
 
   public handle({ type, payload }: Message): void {
     const handler: Function | undefined = this.#handlerByType.get(type);
-    if (handler === undefined) {
-      throw new Error(`No handler found for message type == ${type}`);
+
+    if (handler !== undefined) {
+      handler(payload);
     }
-    handler(payload);
   }
 }
