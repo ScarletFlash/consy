@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/chrome-manifest",
   "action": {
-    "default_popup": "src/popup.html",
+    "default_popup": "src/dialog/index.html",
     "default_icon": {
       "16": "node_modules/@consy/assets/icon-16.png",
       "24": "node_modules/@consy/assets/icon-24.png",

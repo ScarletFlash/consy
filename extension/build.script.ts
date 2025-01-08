@@ -8,10 +8,12 @@ const DEFAULT_CHARSET: 'utf8' = 'utf8';
 
 const RESULT_BUNDLE_PATH: string = resolve(__dirname, 'unpacked-extension');
 
-const POPUP_FILE_NAME: string = 'popup';
-const POPUP_SCRIPT_PATH: string = resolve(__dirname, 'src', `${POPUP_FILE_NAME}.ts`);
-const POPUP_LAYOUT_FILE_NAME: string = `${POPUP_FILE_NAME}.html`;
-const POPUP_STYLES_FILE_NAME: string = `${POPUP_FILE_NAME}.css`;
+const DIALOG_FILE_NAME: string = 'index';
+const DIALOG_DIRECTORY_PATH: string = resolve(__dirname, 'src', 'dialog');
+const DIALOG_SCRIPT_PATH: string = resolve(DIALOG_DIRECTORY_PATH, `${DIALOG_FILE_NAME}.ts`);
+const DIALOG_STYLES_FILE_NAME: string = `${DIALOG_FILE_NAME}.css`;
+const DIALOG_LAYOUT_FILE_PATH: string = join(DIALOG_DIRECTORY_PATH, `${DIALOG_FILE_NAME}.html`);
+const RESULT_BUNDLE_DIALOG_DIRECTORY_PATH: string = join(RESULT_BUNDLE_PATH, 'dialog');
 
 const BUILD_TS_CONFIG_PATH: string = resolve(__dirname, 'tsconfig.build.json');
 
@@ -25,13 +27,44 @@ const EXTENSION_MANIFEST_RESULT_FILE_PATH: string = resolve(RESULT_BUNDLE_PATH, 
 const SOURCE_CODE_DIRECTORY_NAME: string = 'src';
 const SOURCE_CODE_DIRECTORY_PATH: string = resolve(__dirname, SOURCE_CODE_DIRECTORY_NAME);
 
-const ROOT_LAYOUT_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, POPUP_LAYOUT_FILE_NAME);
-const GLOBAL_STYLES_ENTRY_POINT: string = resolve(SOURCE_CODE_DIRECTORY_PATH, POPUP_STYLES_FILE_NAME);
+const GLOBAL_STYLES_ENTRY_POINT: string = resolve(DIALOG_DIRECTORY_PATH, DIALOG_STYLES_FILE_NAME);
 
-const RESULT_BUNDLE_GLOBAL_STYLES_ENTRY_POINT: string = join(RESULT_BUNDLE_PATH, POPUP_STYLES_FILE_NAME);
+const RESULT_BUNDLE_GLOBAL_STYLES_ENTRY_POINT: string = join(
+  RESULT_BUNDLE_DIALOG_DIRECTORY_PATH,
+  DIALOG_STYLES_FILE_NAME
+);
 
 const SOURCE_ASSETS_DIRECTORY_PATH: string = resolve(__dirname, 'node_modules/@consy/assets/');
 const RESULT_BUNDLE_ASSETS_DIRECTORY_PATH: string = join(RESULT_BUNDLE_PATH, 'assets');
+
+async function getAllNestedDirectoryPaths(entryPath: string): Promise<string[]> {
+  const nestedPaths: string[] = [];
+  const unwrappedNestedEntries: string[] = [entryPath];
+
+  while (unwrappedNestedEntries.length !== 0) {
+    const currentEntry: string | undefined = unwrappedNestedEntries.pop();
+    if (currentEntry === undefined) {
+      throw new Error('Unexpected undefined value.');
+    }
+
+    const nestedEntries: Dirent[] = await readdir(currentEntry, { withFileTypes: true });
+    const nestedDirectories: Dirent[] = nestedEntries.filter((nestedEntry: Dirent) => nestedEntry.isDirectory());
+
+    const nestedDirectoryPaths: string[] = nestedDirectories.map((nestedDirectory: Dirent) =>
+      join(currentEntry, nestedDirectory.name)
+    );
+    nestedPaths.push(...nestedDirectoryPaths);
+    unwrappedNestedEntries.push(...nestedDirectoryPaths);
+  }
+
+  return nestedPaths;
+}
+
+async function getNestedFilePaths(directoryPath: string): Promise<string[]> {
+  return (await readdir(directoryPath, { withFileTypes: true }))
+    .filter((entry: Dirent) => entry.isFile())
+    .map((entry: Dirent) => join(directoryPath, entry.name));
+}
 
 interface GenerateCssParams {
   globalStylesInput: string;
@@ -52,9 +85,10 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
 (async () => {
   await rm(RESULT_BUNDLE_PATH, { recursive: true, force: true });
   await mkdir(RESULT_BUNDLE_PATH, { recursive: true });
+  await mkdir(RESULT_BUNDLE_DIALOG_DIRECTORY_PATH, { recursive: true });
 
   new Set([
-    POPUP_SCRIPT_PATH,
+    DIALOG_SCRIPT_PATH,
     BUILD_TS_CONFIG_PATH,
     PACKAGE_MANIFEST_SOURCE_FILE_PATH,
     GLOBAL_STYLES_ENTRY_POINT,
@@ -64,21 +98,27 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     await access(entryPointPath);
   });
 
-  const sourceCodeEntryPaths: string[] = (
-    await readdir(SOURCE_CODE_DIRECTORY_PATH, {
-      withFileTypes: true
-    })
-  )
-    .filter((entry: Dirent) => entry.isFile())
-    .map((entry: Dirent) => join(SOURCE_CODE_DIRECTORY_PATH, entry.name));
+  const sourceCodeEntryFilePaths: string[] = (await getNestedFilePaths(SOURCE_CODE_DIRECTORY_PATH)).concat(
+    DIALOG_SCRIPT_PATH
+  );
 
-  const typescriptEntryPaths: string[] = sourceCodeEntryPaths.filter((entryPath: string) => entryPath.endsWith('.ts'));
-  const layoutEntryPaths: string[] = sourceCodeEntryPaths.filter((entryPath: string) => entryPath.endsWith('.html'));
+  const typescriptEntryPaths: string[] = sourceCodeEntryFilePaths.filter(
+    (entryPath: string) => entryPath.endsWith('.ts') || entryPath.endsWith('.tsx')
+  );
+  const layoutEntryPaths: string[] = [DIALOG_LAYOUT_FILE_PATH];
+
+  const dialogFilePaths: string[] = (
+    await Promise.all(
+      [DIALOG_DIRECTORY_PATH]
+        .concat(await getAllNestedDirectoryPaths(DIALOG_DIRECTORY_PATH))
+        .map(async (directoryPath: string) => await getNestedFilePaths(directoryPath))
+    )
+  ).flat();
 
   await generateCss({
     globalStylesInput: GLOBAL_STYLES_ENTRY_POINT,
     globalStylesOutput: RESULT_BUNDLE_GLOBAL_STYLES_ENTRY_POINT,
-    contentPaths: typescriptEntryPaths.concat(layoutEntryPaths).concat(ROOT_LAYOUT_ENTRY_POINT)
+    contentPaths: typescriptEntryPaths.concat(layoutEntryPaths).concat(DIALOG_DIRECTORY_PATH).concat(dialogFilePaths)
   });
 
   await build({
@@ -93,8 +133,9 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     treeShaking: true,
     charset: DEFAULT_CHARSET,
     legalComments: 'none',
-    keepNames: true,
-    entryNames: '[dir]/[name]'
+    keepNames: false,
+    entryNames: '[dir]/[name]',
+    loader: { '.ts': 'tsx' }
   });
 
   await Promise.all(
@@ -104,7 +145,7 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
       const rawLayoutContent: string = await readFile(layoutEntryPoint, { encoding: DEFAULT_CHARSET });
       const targetLayoutContent: string = rawLayoutContent.replaceAll(`.ts`, `.js`);
 
-      const targetLayoutFilePath: string = join(RESULT_BUNDLE_PATH, layoutFileName);
+      const targetLayoutFilePath: string = join(RESULT_BUNDLE_DIALOG_DIRECTORY_PATH, layoutFileName);
       await writeFile(targetLayoutFilePath, targetLayoutContent, {
         encoding: DEFAULT_CHARSET
       });
