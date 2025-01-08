@@ -1,14 +1,14 @@
-import { CommandParams, CommandParamsDefinition } from '@consy/declarations';
+import { CommandDefinition, ParameterizableCommand } from '@consy/declarations';
 import { MessageBase } from '../message-base';
 import { MessageData } from '../message-data.type';
 
-export interface RequestedCommand<D extends CommandParamsDefinition = CommandParamsDefinition> {
+export interface RequestedCommand<D extends CommandDefinition = CommandDefinition> {
   instanceKey: string;
-  name: string;
-  params: CommandParams<D>;
+  name: D['name'];
+  params: D extends ParameterizableCommand<infer P> ? P : {};
 }
 
-export class RequestedCommandMessage<D extends CommandParamsDefinition = CommandParamsDefinition> extends MessageBase<
+export class RequestedCommandMessage<D extends CommandDefinition = CommandDefinition> extends MessageBase<
   RequestedCommand<D>
 > {
   public static readonly type: 'requested-command' = 'requested-command';

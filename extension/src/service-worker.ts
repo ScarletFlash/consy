@@ -48,6 +48,17 @@ chrome.runtime.onMessage.addListener((data: unknown, sender: chrome.runtime.Mess
   })();
 });
 
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+  await chrome.tabs.sendMessage(tabId, new UpdateRequiredMessage());
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status !== 'complete') {
+    return;
+  }
+  chrome.tabs.sendMessage(tabId, new UpdateRequiredMessage());
+});
+
 chrome.tabs.onRemoved.addListener((tabId: number) => {
   mountedInstancesByTabId.delete(tabId);
 });

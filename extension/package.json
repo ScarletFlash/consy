@@ -15,6 +15,7 @@
     "build": "ts-node --project tsconfig.scripts.json ./build.script.ts"
   },
   "dependencies": {
+    "@headlessui/react": "catalog:codebase",
     "@consy/declarations": "workspace:*",
     "@consy/utilities": "workspace:*",
     "react": "catalog:codebase",
