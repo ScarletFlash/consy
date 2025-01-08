@@ -1,4 +1,5 @@
-import { CommandParamDefinitionBase, CommandParamsDefinition } from '@consy/declarations';
+import { CommandParamsDefinition } from '@consy/declarations';
+import { isCommandParamDefinition } from './is-command-param-definition';
 import { isEmptyObject } from './is-empty-object';
 
 export function isCommandParamsDefinition(
@@ -8,12 +9,7 @@ export function isCommandParamsDefinition(
     return true;
   }
 
-  return Object.values(rawParamsDefinition).every((rawParamsDefinition: unknown) => {
-    if (typeof rawParamsDefinition !== 'object' || rawParamsDefinition === null || isEmptyObject(rawParamsDefinition)) {
-      return false;
-    }
-
-    const paramsDefinition: Partial<CommandParamDefinitionBase> = rawParamsDefinition;
-    return ('type' satisfies keyof CommandParamDefinitionBase) in paramsDefinition;
-  });
+  return Object.values(rawParamsDefinition).every((rawParamDefinition: unknown) =>
+    isCommandParamDefinition(rawParamDefinition)
+  );
 }
