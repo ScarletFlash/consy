@@ -25,6 +25,12 @@ catalogs:
       specifier: ^10.0.0
       version: 10.9.2
   codebase:
+    '@types/react':
+      specifier: ^19.0.0
+      version: 19.0.3
+    '@types/react-dom':
+      specifier: ^19.0.0
+      version: 19.0.2
     chrome-types:
       specifier: ^0.1.0
       version: 0.1.307
@@ -34,6 +40,12 @@ catalogs:
     prettier-plugin-sort-json:
       specifier: ^4.0.0
       version: 4.0.0
+    react:
+      specifier: ^19.0.0
+      version: 19.0.0
+    react-dom:
+      specifier: ^19.0.0
+      version: 19.0.0
     turbo:
       specifier: ~2.3.0
       version: 2.3.3
@@ -184,6 +196,12 @@ importers:
       '@consy/utilities':
         specifier: workspace:*
         version: link:../utilities
+      react:
+        specifier: catalog:codebase
+        version: 19.0.0
+      react-dom:
+        specifier: catalog:codebase
+        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@consy/assets':
         specifier: workspace:*
@@ -197,6 +215,12 @@ importers:
       '@types/node':
         specifier: catalog:build-tools
         version: 22.5.5
+      '@types/react':
+        specifier: catalog:codebase
+        version: 19.0.3
+      '@types/react-dom':
+        specifier: catalog:codebase
+        version: 19.0.2(@types/react@19.0.3)
       chrome-types:
         specifier: catalog:codebase
         version: 0.1.307
@@ -486,6 +510,14 @@ packages:
   '@types/node@22.5.5':
     resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
 
+  '@types/react-dom@19.0.2':
+    resolution: {integrity: sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==}
+    peerDependencies:
+      '@types/react': ^19.0.0
+
+  '@types/react@19.0.3':
+    resolution: {integrity: sha512-UavfHguIjnnuq9O67uXfgy/h3SRJbidAYvNjLceB+2RIKVRBzVsh0QO+Pw6BCSQqFS9xwzKfwstXx0m6AbAREA==}
+
   acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
     engines: {node: '>=0.4.0'}
@@ -602,6 +634,9 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  csstype@3.1.3:
+    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -878,6 +913,15 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-dom@19.0.0:
+    resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
+    peerDependencies:
+      react: ^19.0.0
+
+  react@19.0.0:
+    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
+    engines: {node: '>=0.10.0'}
+
   read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
 
@@ -899,6 +943,9 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
+
+  scheduler@0.25.0:
+    resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
 
   semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
@@ -1294,6 +1341,14 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
+  '@types/react-dom@19.0.2(@types/react@19.0.3)':
+    dependencies:
+      '@types/react': 19.0.3
+
+  '@types/react@19.0.3':
+    dependencies:
+      csstype: 3.1.3
+
   acorn-walk@8.3.4:
     dependencies:
       acorn: 8.12.1
@@ -1399,6 +1454,8 @@ snapshots:
       which: 2.0.2
 
   cssesc@3.0.0: {}
+
+  csstype@3.1.3: {}
 
   didyoumean@1.2.2: {}
 
@@ -1650,6 +1707,13 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+  react-dom@19.0.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      scheduler: 0.25.0
+
+  react@19.0.0: {}
+
   read-cache@1.0.0:
     dependencies:
       pify: 2.3.0
@@ -1671,6 +1735,8 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
+
+  scheduler@0.25.0: {}
 
   semver@7.5.4:
     dependencies:

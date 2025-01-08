@@ -11,8 +11,8 @@ const enum MessageSource {
 
 async function getActiveTabId(): Promise<number | undefined> {
   return new Promise((resolve: (value: number | undefined) => void) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: chrome.tabs.Tab[]) => {
-      resolve(tabs[0]?.id);
+    chrome.tabs.query({ active: true, currentWindow: true }, ([currentTab]: chrome.tabs.Tab[]) => {
+      resolve(currentTab?.id);
     });
   });
 }

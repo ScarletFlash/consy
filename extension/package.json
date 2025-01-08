@@ -16,9 +16,13 @@
   },
   "dependencies": {
     "@consy/declarations": "workspace:*",
-    "@consy/utilities": "workspace:*"
+    "@consy/utilities": "workspace:*",
+    "react": "catalog:codebase",
+    "react-dom": "catalog:codebase"
   },
   "devDependencies": {
+    "@types/react": "catalog:codebase",
+    "@types/react-dom": "catalog:codebase",
     "tailwindcss": "catalog:build-tools",
     "ts-node": "catalog:build-tools",
     "esbuild": "catalog:build-tools",

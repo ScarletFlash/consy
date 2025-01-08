@@ -2,3 +2,4 @@ node_modules/
 tsc-out/
 .turbo/
 .prettiercache
+.DS_Store

@@ -2,7 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "./tsc-out/build",
-    "types": ["chrome-types"]
+    "types": ["chrome-types"],
+    "jsx": "react-jsx"
   },
   "extends": "@consy/configs/typescript/browser.json",
   "include": ["./src"]
