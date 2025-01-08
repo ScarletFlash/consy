@@ -19,6 +19,9 @@ jobs:
   run_publish:
     runs-on: ubuntu-latest
     name: Publish package to NPM
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: 'Fetch current Git commit history'
         uses: actions/checkout@v4
