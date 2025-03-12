@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
+      - 'main'
   pull_request:
     branches:
-      - "main"
+      - 'main'
   schedule:
-    - cron: "0 4 * * *"
+    - cron: '0 4 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.sha }}-${{ github.event_name }}
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Run health checks
     steps:
-      - name: "Fetch current Git commit history"
+      - name: 'Fetch current Git commit history'
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
@@ -40,7 +40,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-${{ github.workflow }}-
             ${{ runner.os }}-turbo-
-          save-always: true
 
       - name: Setup tooling caches
         uses: actions/cache@v4
@@ -53,7 +52,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tooling-${{ github.workflow }}-
             ${{ runner.os }}-tooling-
-          save-always: true
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v4

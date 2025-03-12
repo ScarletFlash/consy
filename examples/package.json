@@ -16,6 +16,7 @@
     "consy": "workspace:*"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "catalog:build-tools",
     "tailwindcss": "catalog:build-tools",
     "@consy/configs": "workspace:*",
     "typescript": "catalog:codebase",
