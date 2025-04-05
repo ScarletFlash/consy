@@ -20,24 +20,33 @@ export function RootContent(): ReactNode {
   const isMounted: boolean = useMemo(() => state.mountedInstances.length !== 0, [state.mountedInstances]);
 
   useEffect(() => {
-    cumulativeHandler.current.provide<MountedInstancesMessage>(
-      MountedInstancesMessage.type,
-      (mountedInstances: MountedInstance[]) => {
-        setState((previousState: RootContentState) => ({
-          ...previousState,
-          mountedInstances
-        }));
-      }
-    );
+    const cumulativeHandlerInstance: CumulativeMessageHandler =
+      cumulativeHandler.current.provide<MountedInstancesMessage>(
+        MountedInstancesMessage.type,
+        (mountedInstances: MountedInstance[]) => {
+          setState((currentState: RootContentState) => {
+            return {
+              ...currentState,
+              mountedInstances
+            };
+          });
+        }
+      );
 
-    chrome.runtime.onMessage.addListener((data: unknown): undefined => {
+    const messageListener: (data: unknown) => undefined = (data: unknown): undefined => {
       if (!MessageBase.isMessageData(data)) {
         return;
       }
-      cumulativeHandler.current.handle(data);
-    });
+
+      cumulativeHandlerInstance.handle(data);
+    };
+    chrome.runtime.onMessage.addListener(messageListener);
 
     chrome.runtime.sendMessage(new UpdateRequiredMessage());
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener);
+    };
   }, []);
 
   if (!isMounted) {

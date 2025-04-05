@@ -22,6 +22,7 @@
     "react-dom": "catalog:codebase"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "catalog:build-tools",
     "@types/react": "catalog:codebase",
     "@types/react-dom": "catalog:codebase",
     "tailwindcss": "catalog:build-tools",

@@ -10,9 +10,12 @@
     "formatter__fix": "prettier --config node_modules/@consy/configs/prettier/config.json --ignore-path node_modules/@consy/configs/prettier/ignore --cache --cache-location .prettiercache --cache-strategy content --write .",
     "extract-api": "api-extractor run --local --typescript-compiler-folder node_modules/typescript"
   },
+  "dependencies": {
+    "@consy/declarations": "workspace:*",
+    "uuid": "catalog:codebase"
+  },
   "devDependencies": {
     "@consy/configs": "workspace:*",
-    "@consy/declarations": "workspace:*",
     "prettier": "catalog:codebase",
     "typescript": "catalog:codebase",
     "@microsoft/api-extractor": "catalog:build-tools"

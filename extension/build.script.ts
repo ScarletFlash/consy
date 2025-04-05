@@ -6,6 +6,8 @@ import { basename, join, resolve } from 'path';
 
 const DEFAULT_CHARSET: 'utf8' = 'utf8';
 
+const TAILWIND_BIN_PATH: string = resolve(__dirname, 'node_modules', '.bin', 'tailwindcss');
+
 const RESULT_BUNDLE_PATH: string = resolve(__dirname, 'unpacked-extension');
 
 const DIALOG_FILE_NAME: string = 'index';
@@ -75,7 +77,7 @@ interface GenerateCssParams {
 async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput }: GenerateCssParams) {
   return new Promise<void>((resolve: () => void, reject: (error: Error) => void) => {
     exec(
-      `tailwindcss --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
+      `${TAILWIND_BIN_PATH} --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
     ).on('close', (code: number) => {
       code === 0 ? resolve() : reject(new Error(`Tailwind CSS process exited with code ${code}`));
     });

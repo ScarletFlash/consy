@@ -14,3 +14,6 @@ export * from './types/non-parameterizable-command.type';
 export * from './types/parameterizable-command.type';
 export * from './types/promise-rejector.type';
 export * from './types/promise-resolver.type';
+export * from './types/uuid.type';
+export * from './constants/null-uuid.const';
+export * from './types/null-uuid.type';

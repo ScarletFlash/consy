@@ -8,6 +8,8 @@ const DEFAULT_CHARSET: 'utf8' = 'utf8';
 
 const SERVE_PATH: string = resolve(__dirname, 'serve');
 
+const TAILWIND_BIN_PATH: string = resolve(__dirname, 'node_modules', '.bin', 'tailwindcss');
+
 const ENTRY_POINT_FILE_NAME: string = 'index';
 const LAYOUT_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.html`;
 const GLOBAL_STYLES_ENTRY_POINT_FILE_NAME: string = `${ENTRY_POINT_FILE_NAME}.css`;
@@ -30,7 +32,7 @@ interface GenerateCssParams {
 async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput }: GenerateCssParams) {
   return new Promise<void>((resolve: () => void, reject: (error: Error) => void) => {
     exec(
-      `tailwindcss --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
+      `${TAILWIND_BIN_PATH} --input ${globalStylesInput} --output ${globalStylesOutput} --minify --no-autoprefixer --content ${contentPaths.join(',')}`
     ).on('close', (code: number) => {
       code === 0 ? resolve() : reject(new Error(`Tailwind CSS process exited with code ${code}`));
     });
@@ -111,7 +113,9 @@ async function generateCss({ contentPaths, globalStylesOutput, globalStylesInput
     entryNames: '[dir]/[name]'
   });
 
-  const { host, port }: ServeResult = await buildContext.serve({ servedir: SERVE_PATH });
+  const { hosts, port }: ServeResult = await buildContext.serve({ servedir: SERVE_PATH });
 
-  console.log(`Serving at http://${host}:${port}/`);
+  hosts.forEach((host: string) => {
+    console.log(`Serving at http://${host}:${port}/`);
+  });
 })();
